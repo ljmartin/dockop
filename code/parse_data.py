@@ -1,3 +1,4 @@
+import numpy as np
 import sys
 from tqdm import tqdm
 import random 
@@ -31,15 +32,20 @@ p = int(desired_num_ligands)/count
 smifile = open(filename, 'r')
 smifile.readline() #read past the header.
 
-outsmi = open(outfilename, 'w')
-outsmi.write('smiles,dockscore\n')
+outsmi = open(outfilename+'_short.smi', 'w')
+outsmi.write('smiles\n')
+
+scores = list()
 
 for line in tqdm(smifile, total=count, smoothing=0):
     if random.choices([True,False], weights=[p, 1-p])[0]:
-        short = line[17:] #removes the zinc ID
-        if short.split(',')[1]=='no_score':
+        words = line[17:-1].split(',') #removes the zinc ID and trailing newline
+        if words[1]=='no_score':
             break
         else:
-            outsmi.write(short)
+            scores.append(float(words[1]))
+            outsmi.write(words[0]+'\n')
+
+np.save('../processed_data/'+outfilename+'_short.npy', np.array(scores, dtype=np.float16))
 outsmi.close()
 smifile.close()

@@ -2,4 +2,4 @@
  faster docking
 
 
-conda env create -f dockop.yml
+`conda env create -f dockop.yml`
