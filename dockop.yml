@@ -1,0 +1,18 @@
+name: dockop
+channels:
+  - conda-forge
+  - rdkit
+dependencies:
+  - numpy
+  - scipy
+  - pandas
+  - jupyter
+  - matplotlib
+  - scikit-learn
+  - tqdm
+  - cython
+  - pip
+  - pip:
+    - n2
+    - bitstring
+    - scikit-network
