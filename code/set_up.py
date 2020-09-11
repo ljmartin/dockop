@@ -11,7 +11,7 @@ import n2
 from sknetwork.hierarchy import Paris
 from sknetwork.hierarchy import cut_balanced, cut_straight
 
-class Evaluator(object):
+class Setup(object):
     """Handles all the evaluation stuff for a given fingerprint setting."""
     def __init__(self, fingerprint, fpsize, smifile):
         """This class just wraps all the analysis together so that it's easier later to 
@@ -28,10 +28,20 @@ class Evaluator(object):
         self.fingerprint_kind=fingerprint
         self.fpsize=fpsize
         self.fingerprint_function = self.get_fingerprint_function()
+        #these two come from parse_data.py
         self.smifile = smifile+'_short.smi'
         self.scorefile = smifile+'_short.npy'
-        self.num_ligs = sum(1 for line in open(self.smifile))-1 #it comes in handy a few times to know how many ligands we have
-        
+        self.num_ligs = sum(1 for line in open(self.smifile))-1 #it comes in handy a few times to know how many ligands there are
+
+    def load_smiles(self):
+        f = open(self.smifile, 'r')
+        f.readline()
+        self.smiles = np.array([line[:-1] for line in f])
+        f.close()
+
+    def load_scores(self):
+        self.scores = np.load(self.scorefile)
+    
     def get_fingerprint_function(self):
         """RDKit has lots of different ways to make fingerprits. 
         So this just returns the correct function for a given FP.
@@ -83,7 +93,7 @@ class Evaluator(object):
         it outperforms many other libraries according to ann_benchmarks. n2 is awesome.
         It does not, however, offer dice, jaccard, or tanimoto. In practice cosine works fine."""
 
-        index = n2.HnswIndex(self.fpsize, "angular") # HnswIndex(f, "L2, euclidean, or angular")
+        index = n2.HnswIndex(self.fpsize, "angular")
         for fp in self.fingerprints:
             index.add_data(fp)
             
@@ -104,7 +114,7 @@ class Evaluator(object):
         indptr.append(count)
         
         for i in tqdm(range(self.num_ligs)):
-            neighbor_idx = index.search_by_id(i,k,50, include_distances=True)[1:]
+            neighbor_idx = index.search_by_id(i,k,100, include_distances=True)[1:]
             for nidx, distance in neighbor_idx:
                 data.append(1-distance)
                 indices.append(nidx)
@@ -118,7 +128,7 @@ class Evaluator(object):
             idx = np.random.choice(self.num_ligs)
             adjacency_indices = self.adj[idx].indices
             adjacency_distances = 1-self.adj[idx].data
-            query = index.search_by_id(idx, k, 50, include_distances=True)[1:]
+            query = index.search_by_id(idx, k, 100, include_distances=True)[1:]
             index_indices = [i[0] for i in query]
             index_distances = [i[1] for i in query]
             assert np.allclose(index_distances, adjacency_distances, atol=1e-3) #high tolerance because np.float16 conversion.
@@ -154,5 +164,12 @@ class Evaluator(object):
             self.clusters = cut_balanced(self.dendrogram, n_clust)
         else:
             print('Choose \"straight\" or \"balanced\"')
+
+    def random_split(self, number_train_ligs):
+        """Simply selects some test and train indices"""
+        idx = np.arange(self.num_ligs)
+        np.random.shuffle(idx)
+        self.train_idx = idx[:number_train_ligs]
+        self.test_idx = idx[number_train_ligs:]
 
         
