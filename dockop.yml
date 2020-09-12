@@ -17,3 +17,4 @@ dependencies:
     - n2
     - bitstring
     - scikit-network
+    - hdf5

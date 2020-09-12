@@ -1,0 +1,2 @@
+{"estimators":
+ [{"estimator": "LogisticRegression", "kwargs": {"penalty": "l2", "solver": "lbfgs", "C": 0.1}, "kind": "classifier"}, {"estimator": "LogisticRegression", "kwargs": {"penalty": "l2", "solver": "lbfgs", "C": 1}, "kind": "classifier"}, {"estimator": "LogisticRegression", "kwargs": {"penalty": "l2", "solver": "lbfgs", "C": 10}, "kind": "classifier"}]}

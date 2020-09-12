@@ -13,7 +13,7 @@ from sknetwork.hierarchy import cut_balanced, cut_straight
 
 class Setup(object):
     """Handles all the evaluation stuff for a given fingerprint setting."""
-    def __init__(self, fingerprint, fpsize, smifile):
+    def __init__(self, fingerprint, fpsize, smifile, verbose=False):
         """This class just wraps all the analysis together so that it's easier later to 
         evaluate multiple fingerprint types and regressors/classifiers using a common interface. 
 
@@ -32,14 +32,20 @@ class Setup(object):
         self.smifile = smifile+'_short.smi'
         self.scorefile = smifile+'_short.npy'
         self.num_ligs = sum(1 for line in open(self.smifile))-1 #it comes in handy a few times to know how many ligands there are
+        self.verbose=verbose
 
     def load_smiles(self):
+        """Loads the smifile and stores as list """
+        if self.verbose:
+            print('loading smiles')
+
         f = open(self.smifile, 'r')
         f.readline()
         self.smiles = np.array([line[:-1] for line in f])
         f.close()
 
     def load_scores(self):
+        """Loads the scores and stores as np.float16"""
         self.scores = np.load(self.scorefile)
     
     def get_fingerprint_function(self):
@@ -55,7 +61,9 @@ class Setup(object):
     def write_fingerprints(self):
         """Writes one of the rdkit fingerprints to a binary file (to save storage space)
         Probably a more modern option is HDF5 but this works too."""
-        
+
+        if self.verbose:
+            print('writing fingerprints to binary...')
         binfile = open('../processed_data/fingerprints.bin', 'wb') #writing to this file.
         smifile = open(self.smifile, 'r') #file containing the smiles codes.
         smifile.readline() #read past the header.
@@ -75,7 +83,10 @@ class Setup(object):
         """Turns the fingerprints binary file into a numpary array of size (num_ligs, fpsize)
         It uses the bitstring library to read chunks of bits, where each chunk corresponds to one fp.
         Then you just read the long string of bits with numpy and reshape! Hacky but it works well."""
-        
+
+        if self.verbose:
+            print('loading fingerprints from binary')
+
         fpfile = open('../processed_data/fingerprints.bin', 'rb')
         bits = ''
         for _ in range(self.num_ligs):
@@ -93,9 +104,14 @@ class Setup(object):
         it outperforms many other libraries according to ann_benchmarks. n2 is awesome.
         It does not, however, offer dice, jaccard, or tanimoto. In practice cosine works fine."""
 
+        if self.verbose:
+            print('adding vector data to n2')
         index = n2.HnswIndex(self.fpsize, "angular")
         for fp in self.fingerprints:
             index.add_data(fp)
+
+        if self.verbose:
+            print(f'building index with {nthreads}')
             
         index.build(n_threads=nthreads)
         index.save('../processed_data/n2_index.hnsw')
@@ -103,7 +119,10 @@ class Setup(object):
     def build_knn_graph(self, k):
         """Builds a kNN graph using the approx. NN index built earlier. In practice,
         in most nearest neighbor settings going above k=25 doesn't reall add any benefit."""
-        
+
+        if self.verbose:
+            print(f'constructing kNN graph with k={k}')
+            
         index = n2.HnswIndex(self.fpsize, "angular")
         index.load('../processed_data/n2_index.hnsw')
 
@@ -140,11 +159,11 @@ class Setup(object):
         PARIS clustering is hierarchical, so it returns a dendrogram instead of clusters. Later we cut the dendrogram.
         see: Hierarchical Graph Clustering using Node Pair Sampling by Bonald et al  https://arxiv.org/abs/1806.01664"""
 
-        print('fitting:')
+        if self.verbose:
+            print('fitting PARIS hierarchical clustering')
         paris = Paris()        
         paris.fit(self.adj)
         self.dendrogram = paris.dendrogram_
-        print('Done')
 
     def cluster(self, method, n_clust=None, threshold=None):
         """Cuts the dendrogram and returns cluster IDs. Straight cuts can either
@@ -153,6 +172,9 @@ class Setup(object):
         
         Balanced cuts respect a maximum cluster size. The number of clusters is determined 
         on the fly. """
+
+        if self.verbose:
+            print(f'clustering with a {method} cut')
         
         if method == 'straight':
             if n_clust is not None and threshold is not None:

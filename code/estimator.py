@@ -26,9 +26,14 @@ class CommonEstimator(object):
         self.cutoff = DOCKING_SCORE_CUTOFF
         #these are the hyperparameters:
         self.kwargs = parameters['kwargs']
+
         #instantiate an estimator from a string (i.e. "LogisticRegression")
         #and feed it the hyperpararmeters
+        ##WARNING: eval is typically not used due to security issues of loading and
+        ##executing unknown code. In this case, however, I control the contents of
+        ##the JSON file in my own repo. 
         self.estimator = eval(parameters['estimator'])(**self.kwargs)
+        
         
         #this helps later when fitting.
         self.kind = parameters['kind']

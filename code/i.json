@@ -1,0 +1,31 @@
+{
+ "estimators": [
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 0.1,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   }
+  },
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 1,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   }
+  },
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 10,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   }
+  }
+ ]
+}
