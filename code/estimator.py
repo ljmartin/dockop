@@ -1,9 +1,8 @@
 from sklearn.linear_model import LogisticRegression, LinearRegression, Ridge, SGDClassifier, ElasticNet, Lasso
 from sklearn.naive_bayes import BernoulliNB
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.svm import SVC, SVR
 from sklearn.gaussian_process import GaussianProcessClassifier
-
 
 DOCKING_SCORE_CUTOFF = -60
 

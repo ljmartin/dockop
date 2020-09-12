@@ -38,7 +38,7 @@ if __name__=='__main__':
     #clst.fit(setup.fingerprints)
     #setup.clusters=clst.labels_
 
-    for training_size in [20000]:
+    for training_size in [10000]:
         #evaluation stuff goes here:
         for estimator in estimators:
 
