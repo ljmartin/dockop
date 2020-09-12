@@ -45,7 +45,7 @@ class CommonEstimator(object):
     def fit(self, X, y):
         """Got to binarize the `y` labels in the case of a classifier."""
         if self.verbose:
-            print(f'Fitting a {self.estimator.__class__.__name__} estimator')
+            print(f'Fitting a {self.estimator.__class__.__name__} estimator, {X.shape} training set. {self.kwargs}')
             
         if self.kind=='classifier':
             self.estimator.fit(X, y<self.cutoff)

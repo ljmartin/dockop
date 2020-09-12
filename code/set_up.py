@@ -3,7 +3,8 @@ from scipy import sparse
 import h5py
 
 from rdkit import Chem
-from rdkit.Chem import rdFingerprintGenerator
+from rdkit.Chem import rdFingerprintGenerator,MACCSkeys
+from rdkit.Chem.rdmolops import PatternFingerprint, LayeredFingerprint, RDKFingerprint
 
 from tqdm import tqdm
 import bitstring
@@ -55,10 +56,16 @@ class Setup(object):
 
         No input since the fingerprint type is set during init"""
         if self.fingerprint_kind=='morgan':
-            gen_mo = rdFingerprintGenerator.GetMorganGenerator(fpSize=self.fpsize)
+            function = rdFingerprintGenerator.GetMorganGenerator(fpSize=self.fpsize).GetFingerprint
         if self.fingerprint_kind=='atompair':
-            gen_mo = rdFingerprintGenerator.GetAtomPairGenerator(fpSize=self.fpsize)
-        return gen_mo.GetFingerprint
+            function = rdFingerprintGenerator.GetAtomPairGenerator(fpSize=self.fpsize).GetFingerprint
+        if self.fingerprint_kind=='topologicaltorsion':
+            function = rdFingerprintGenerator.GetTopologicalTorsionGenerator(fpSize=self.fpsize).GetFingerprint
+        if self.fingerprint_kind=='maccs':
+            function = MACCSkeys.GenMACCSKeys
+        if self.fingerprint_kind=='rdk':
+            function = lambda mol: RDKFingerprint(mol, fpSize=self.fpsize)
+        return function
     
  
     
@@ -76,7 +83,8 @@ class Setup(object):
         for line in tqdm(smifile, total=self.num_ligs, smoothing=0):
             mol = Chem.MolFromSmiles(line[:-1])
             fp = self.fingerprint_function(mol)
-            bs = bitstring.BitArray(bin=fp.ToBitString()) #turn it into binary.
+            ##have to add a single zero for MACCS keys to make it divisible by 8
+            bs = bitstring.BitArray(bin=fp.ToBitString()+('0' if self.fingerprint_kind=='maccs' else '')) #turn it into binary.
             binfile.write(bs.bytes)
 
         binfile.close()

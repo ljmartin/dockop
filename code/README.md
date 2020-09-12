@@ -7,8 +7,7 @@ select N ligands from the 99million in the AmpC screen:
 ```
 conda activate dockop
 
-python parse_data.py ../data/AmpC_screen_table.csv 2000000 ../processed_data/AmpC_short.csv
-
+python parse_data.py ../data/AmpC_screen_table.csv 10000000 ../processed_data/AmpC
 ```
 
 then choose a fingerprint (from 'morgan', 'atompair', 'rdk', ...tba) and a fingerprint size.
