@@ -1,5 +1,5 @@
 import psutil
-
+import psutil
 
 def format_bytes(size):
     # 2**10 = 1024

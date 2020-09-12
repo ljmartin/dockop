@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import sparse
+import h5py
 
 from rdkit import Chem
 from rdkit.Chem import rdFingerprintGenerator
@@ -54,8 +55,11 @@ class Setup(object):
 
         No input since the fingerprint type is set during init"""
         if self.fingerprint_kind=='morgan':
-            gen_mo = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=self.fpsize)
+            gen_mo = rdFingerprintGenerator.GetMorganGenerator(fpSize=self.fpsize)
+        if self.fingerprint_kind=='atompair':
+            gen_mo = rdFingerprintGenerator.GetAtomPairGenerator(fpSize=self.fpsize)
         return gen_mo.GetFingerprint
+    
  
     
     def write_fingerprints(self):
@@ -195,3 +199,30 @@ class Setup(object):
         self.test_idx = idx[number_train_ligs:]
 
         
+    def write_results(self, preds, name, repeat_number):
+        """Writes an HDF5 file that stores the results. 
+        preds: np.array: prediction scores for the test samples
+        name: str: the estimator name, as stored in the json
+        repeat_number: int.
+ 
+        Results stored are:
+        - test indices
+        - preds 
+        and there should be one set of results for each repeat."""
+
+        if repeat_number==0:
+            #this is the first iteration. therefore overwrite any existing file that was there
+            outf = h5py.File('../processed_data/'+self.fingerprint_kind+'_'+name+'.hdf5', 'w')
+        else:
+            #second or thereafter iteration. 'a' is Append mode. 
+            outf = h5py.File('../processed_data/'+self.fingerprint_kind+'_'+name+'.hdf5', 'a')
+
+        rp = outf.create_group(f'repeat{repeat_number}')
+
+        dset_idx = rp.create_dataset('test_idx', self.test_idx.shape, dtype='int')
+        dset_idx[:] = self.test_idx
+
+        dset_pred = rp.create_dataset('prediction', preds.shape, dtype='float16')
+        dset_pred[:] = preds
+        
+        outf.close()
