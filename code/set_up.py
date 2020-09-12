@@ -65,6 +65,8 @@ class Setup(object):
             function = MACCSkeys.GenMACCSKeys
         if self.fingerprint_kind=='rdk':
             function = lambda mol: RDKFingerprint(mol, fpSize=self.fpsize)
+        if self.fingerprint_kind=='pattern':
+            function = lambda mol: PatternFingerprint(mol, fpSize=self.fpsize)
         return function
     
  
