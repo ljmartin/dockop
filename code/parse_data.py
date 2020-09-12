@@ -4,6 +4,7 @@ from tqdm import tqdm
 import random 
 
 
+random.seed(733101) #from www.random.org
 
 filename = sys.argv[1]
 desired_num_ligands = sys.argv[2]
