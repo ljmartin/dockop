@@ -8,7 +8,10 @@ dependencies:
   - pandas
   - jupyter
   - rdkit
+  - pymc3
+  - altair
   - matplotlib
+  - hdf5
   - scikit-learn
   - tqdm
   - cython
@@ -17,4 +20,4 @@ dependencies:
     - n2
     - bitstring
     - scikit-network
-    - hdf5
+    - psutil

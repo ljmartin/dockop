@@ -3,6 +3,7 @@ from sklearn.naive_bayes import BernoulliNB
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.svm import SVC, SVR
 from sklearn.gaussian_process import GaussianProcessClassifier
+import time
 
 DOCKING_SCORE_CUTOFF = -60
 
@@ -45,6 +46,8 @@ class CommonEstimator(object):
     def fit(self, X, y):
         """Got to binarize the `y` labels in the case of a classifier."""
         if self.verbose:
+            start = time.time()
+
             print(f'Fitting a {self.estimator.__class__.__name__} estimator, {X.shape} training set. {self.kwargs}')
             
         if self.kind=='classifier':
@@ -53,18 +56,33 @@ class CommonEstimator(object):
             self.estimator.fit(X, y)
         else:
             raise ValueError('Got to set `kind` as either `classifier` or `regressor`')
+        if self.verbose:
+            end = time.time()
+            print('Time:', end - start)
 
     def predict(self, X):
         """Got to return `predict` for regressors, and `predict_proba` for classifiers"""
+        if self.verbose:
+            print('\tpredicting:')
+            start = time.time()
         if self.kind=='classifier':
             try:
-                return self.estimator.predict_proba(X)[:,1] #return the positive class probabilities
+                preds = self.estimator.predict_proba(X)[:,1] #return the positive class probabilities=
             except:
-                return self.estimator.decision_function(X) #like proba, higher is better!
+                preds = self.estimator.decision_function(X) #like proba, higher is better!
+            if self.verbose:
+                end = time.time()
+                print('Time:', end - start)
+            return preds
         elif self.kind=='regressor':
-            return -1 * self.estimator.predict(X) # we want the most negative scores to be the most positive predictions
+            preds = -1 * self.estimator.predict(X) # we want the most negative scores to be the most positive predictions
+            if self.verbose:
+                end = time.time()
+                print('Time:', end - start)
+            return preds
         else:
             raise ValueError('Got to set `kind` as either `classifier` or `regressor`')
+
 
     def get_estimator(self):
         return self.estimator

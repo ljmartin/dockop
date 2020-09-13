@@ -42,7 +42,7 @@ if __name__=='__main__':
         #evaluation stuff goes here:
         for estimator in estimators:
 
-            for repeat in range(1):
+            for repeat in range(5):
                 setup.random_split(training_size)
                 
                 common_estimator = CommonEstimator(estimator, setup.verbose)

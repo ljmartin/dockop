@@ -1,0 +1,214 @@
+{
+ "estimators": [
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 0.01,
+    "max_iter": 1000,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   },
+   "name": "logreg0.01"
+  },
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 0.1,
+    "max_iter": 1000,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   },
+   "name": "logreg0.1"
+  },
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 1,
+    "max_iter": 1000,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   },
+   "name": "logreg1"
+  },
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 10,
+    "max_iter": 1000,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   },
+   "name": "logreg10"
+  },
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 100,
+    "max_iter": 1000,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   },
+   "name": "logreg100"
+  },
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 1000,
+    "max_iter": 1000,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   },
+   "name": "logreg1000"
+  },
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 10000,
+    "max_iter": 1000,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   },
+   "name": "logreg10000"
+  },
+  {
+   "estimator": "LinearRegression",
+   "kind": "regressor",
+   "kwargs": {},
+   "name": "linreg"
+  },
+  {
+   "estimator": "BernoulliNB",
+   "kind": "classifier",
+   "kwargs": {},
+   "name": "bernoullinb"
+  },
+  {
+   "estimator": "AdaBoostClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "n_estimators": 30
+   },
+   "name": "adaboost30"
+  },
+  {
+   "estimator": "AdaBoostClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "n_estimators": 100
+   },
+   "name": "adaboost100"
+  },
+  {
+   "estimator": "AdaBoostClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "n_estimators": 300
+   },
+   "name": "adaboost300"
+  },
+  {
+   "estimator": "RandomForestClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "n_estimators": 300
+   },
+   "name": "rfc300"
+  },
+  {
+   "estimator": "RandomForestClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "n_estimators": 1000
+   },
+   "name": "rfc1000"
+  },
+  {
+   "estimator": "RandomForestClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "n_estimators": 1000
+   },
+   "name": "rfc3000"
+  },
+  {
+   "estimator": "SVC",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 1
+   },
+   "name": "svc1"
+  },
+  {
+   "estimator": "Ridge",
+   "kind": "regressor",
+   "kwargs": {},
+   "name": "ridge"
+  },
+  {
+   "estimator": "SGDClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "alpha": 0.0001
+   },
+   "name": "sgdc0"
+  },
+  {
+   "estimator": "SGDClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "alpha": 0.001
+   },
+   "name": "sgdc1"
+  },
+  {
+   "estimator": "SGDClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "alpha": 0.01
+   },
+   "name": "sgdc2"
+  },
+  {
+   "estimator": "SGDClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "alpha": 1e-05
+   },
+   "name": "sgdc3"
+  },
+  {
+   "estimator": "SGDClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "alpha": 0.0001,
+    "penalty": "l1"
+   },
+   "name": "sgdc4"
+  },
+  {
+   "estimator": "SGDClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "alpha": 0.0001,
+    "penalty": "elasticnet"
+   },
+   "name": "sgdc5"
+  },
+  {
+   "estimator": "SGDClassifier",
+   "kind": "classifier",
+   "kwargs": {
+    "alpha": 1e-05,
+    "penalty": "elasticnet"
+   },
+   "name": "sgdc6"
+  }
+ ]
+}
