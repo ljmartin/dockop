@@ -1,0 +1,15 @@
+{
+ "estimators": [
+  {
+   "estimator": "LogisticRegression",
+   "kind": "classifier",
+   "kwargs": {
+    "C": 1,
+    "max_iter": 1000,
+    "penalty": "l2",
+    "solver": "lbfgs"
+   },
+   "name": "logreg_only"
+  }
+ ]
+}

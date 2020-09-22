@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.8.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"name": "data-6e5def0e5b0923fe3acb8b81c974d5ee"}, "facet": {"row": {"type": "nominal", "field": "Fingerprint"}}, "spec": {"layer": [{"mark": {"type": "point", "filled": true}, "encoding": {"color": {"type": "nominal", "field": "Algorithm"}, "x": {"type": "quantitative", "axis": {"grid": false}, "field": "mean", "title": "Average Precision"}, "y": {"type": "nominal", "axis": {"grid": true}, "field": "Algorithm", "sort": "-x", "title": ""}}}, {"mark": "rule", "encoding": {"color": {"type": "nominal", "field": "Algorithm"}, "x": {"type": "quantitative", "field": "low_cr"}, "x2": {"field": "high_cr"}, "y": {"type": "nominal", "axis": {"grid": true}, "field": "Algorithm", "sort": "-x", "title": ""}}}]}, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json", "datasets": {"data-6e5def0e5b0923fe3acb8b81c974d5ee": [{"Fingerprint": "MACCS", "Algorithm": "Logistic Regression", "mean": 0.3355441035436305, "low_cr": 0.329582518961997, "high_cr": 0.3415585842087084}, {"Fingerprint": "MACCS", "Algorithm": "Random Forest", "mean": 0.3600147846459425, "low_cr": 0.35751860794714413, "high_cr": 0.36251855571609815}, {"Fingerprint": "MACCS", "Algorithm": "Support Vector Classifier", "mean": 0.3286817971828534, "low_cr": 0.3152098963087142, "high_cr": 0.3424415498475916}, {"Fingerprint": "Morgan", "Algorithm": "Logistic Regression", "mean": 0.07790172662731408, "low_cr": 0.0728519171411622, "high_cr": 0.08327013154055507}, {"Fingerprint": "Morgan", "Algorithm": "Random Forest", "mean": 0.08147632670930909, "low_cr": 0.07584705819672093, "high_cr": 0.08748384185251064}, {"Fingerprint": "Morgan", "Algorithm": "Support Vector Classifier", "mean": 0.09971054242780629, "low_cr": 0.09627903930933968, "high_cr": 0.10325037537835757}, {"Fingerprint": "Topological\nTorsion", "Algorithm": "Logistic Regression", "mean": 0.03160296705732025, "low_cr": 0.0304952994971941, "high_cr": 0.03274950887972264}, {"Fingerprint": "Topological\nTorsion", "Algorithm": "Random Forest", "mean": 0.03702145529050668, "low_cr": 0.034637400393200644, "high_cr": 0.039562877232999914}, {"Fingerprint": "Topological\nTorsion", "Algorithm": "Support Vector Classifier", "mean": 0.03405281034423799, "low_cr": 0.032301205892617445, "high_cr": 0.035895876062327}, {"Fingerprint": "Atom\nPair", "Algorithm": "Logistic Regression", "mean": 0.03323582956063706, "low_cr": 0.03215857939907205, "high_cr": 0.034347884862639254}, {"Fingerprint": "Atom\nPair", "Algorithm": "Random Forest", "mean": 0.032913305348450834, "low_cr": 0.03174642940289397, "high_cr": 0.034121559688501835}, {"Fingerprint": "Atom\nPair", "Algorithm": "Support Vector Classifier", "mean": 0.028942083940743307, "low_cr": 0.02807041674780435, "high_cr": 0.029839987878245627}, {"Fingerprint": "Pattern", "Algorithm": "Logistic Regression", "mean": 0.03219043353791356, "low_cr": 0.03087055771818673, "high_cr": 0.03356478642098704}, {"Fingerprint": "Pattern", "Algorithm": "Random Forest", "mean": 0.022836101376489084, "low_cr": 0.022277515207849714, "high_cr": 0.023408358201174744}, {"Fingerprint": "Pattern", "Algorithm": "Support Vector Classifier", "mean": 0.027271888267129184, "low_cr": 0.02541424070303124, "high_cr": 0.029261243288624665}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
