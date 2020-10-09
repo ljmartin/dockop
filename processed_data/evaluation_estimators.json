@@ -90,117 +90,18 @@
    "name": "bernoullinb"
   },
   {
-   "estimator": "AdaBoostClassifier",
+   "estimator": "LinearSVC",
    "kind": "classifier",
    "kwargs": {
-    "n_estimators": 30
+    "C": 0.1
    },
-   "name": "adaboost30"
-  },
-  {
-   "estimator": "AdaBoostClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "n_estimators": 100
-   },
-   "name": "adaboost100"
-  },
-  {
-   "estimator": "RandomForestClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "n_estimators": 300
-   },
-   "name": "rfc300"
-  },
-  {
-   "estimator": "RandomForestClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "n_estimators": 1000
-   },
-   "name": "rfc1000"
-  },
-  {
-   "estimator": "RandomForestClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "n_estimators": 1000
-   },
-   "name": "rfc3000"
-  },
-  {
-   "estimator": "SVC",
-   "kind": "classifier",
-   "kwargs": {
-    "C": 1
-   },
-   "name": "svc1"
+   "name": "linearsvc"
   },
   {
    "estimator": "Ridge",
    "kind": "regressor",
    "kwargs": {},
    "name": "ridge"
-  },
-  {
-   "estimator": "SGDClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "alpha": 0.0001
-   },
-   "name": "sgdc0"
-  },
-  {
-   "estimator": "SGDClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "alpha": 0.001
-   },
-   "name": "sgdc1"
-  },
-  {
-   "estimator": "SGDClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "alpha": 0.01
-   },
-   "name": "sgdc2"
-  },
-  {
-   "estimator": "SGDClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "alpha": 1e-05
-   },
-   "name": "sgdc3"
-  },
-  {
-   "estimator": "SGDClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "alpha": 0.0001,
-    "penalty": "l1"
-   },
-   "name": "sgdc4"
-  },
-  {
-   "estimator": "SGDClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "alpha": 0.0001,
-    "penalty": "elasticnet"
-   },
-   "name": "sgdc5"
-  },
-  {
-   "estimator": "SGDClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "alpha": 1e-05,
-    "penalty": "elasticnet"
-   },
-   "name": "sgdc6"
   }
  ]
 }

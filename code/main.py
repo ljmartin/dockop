@@ -15,6 +15,7 @@ trainingSetSize = int(sys.argv[3])
 json_name = sys.argv[4]
 dataset = sys.argv[5]
 
+
 print('Running:')
 print(f'python main.py {fpType} {fpSize} {json_name} {dataset}')
 
@@ -42,5 +43,5 @@ if __name__=='__main__':
             common_estimator.fit(feature_matrix[setup.train_idx], setup.scores[setup.train_idx])
             pred = common_estimator.chunked_predict(feature_matrix[setup.test_idx])
 
-            setup.write_results(pred, fpSize, estimator['name'], repeat)
+            setup.write_results(pred, fpSize, trainingSetSize, estimator['name'], repeat)
                 

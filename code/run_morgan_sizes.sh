@@ -2,29 +2,6 @@
 
 #python parse_data.py ../data/AmpC_screen_table.csv 1000000 ../processed_data/AmpC
 
-python main.py morgan 64 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 128 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 256 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 512 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 1024 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 2048 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 4096 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 8192 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 16384 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 32768 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-python main.py morgan 65536 15000 ../processed_data/logreg_only.json ../processed_data/AmpC
-
-python main.py morgan 64 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 128 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 256 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 512 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 1024 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 2048 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 4096 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 8192 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 16384 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 32768 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-python main.py morgan 65536 15000 ../processed_data/bernoulli_only.json ../processed_data/AmpC
-
-
-
+for size in 64 128 256 512 1024 2048 4096 8192 16384 32768 65536; do
+    python main.py morgan $size 15000 ../processed_data/evaluation_estimators.json ../processed_data/AmpC
+done

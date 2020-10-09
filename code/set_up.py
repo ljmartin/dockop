@@ -210,7 +210,7 @@ class Setup(object):
         self.test_idx = idx[number_train_ligs:]
 
         
-    def write_results(self, preds, fpsize, name, repeat_number):
+    def write_results(self, preds, fpsize, trainingSize, name, repeat_number):
         """Writes an HDF5 file that stores the results. 
         preds: np.array: prediction scores for the test samples
         fpsize: int: size the fingerprint was folded to
@@ -224,7 +224,7 @@ class Setup(object):
 
         #write the first time, append afterwards. 
         write_option = 'w' if repeat_number==0 else 'a'
-        outf = h5py.File('../processed_data/'+self.fingerprint_kind+'_'+str(fpsize)+'_'+name+'.hdf5', write_option)
+        outf = h5py.File('../processed_data/'+self.fingerprint_kind+'_'+str(fpsize)+'_'+str(trainingSize)+'_'+name+'.hdf5', write_option)
 
         rp = outf.create_group(f'repeat{repeat_number}')
 

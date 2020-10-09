@@ -1,0 +1,11 @@
+{
+ "estimators": [
+  {
+   "estimator": "BernoulliNB",
+   "kind": "classifier",
+   "kwargs": {
+   },
+   "name": "bernoulli_only"
+  }
+ ]
+}

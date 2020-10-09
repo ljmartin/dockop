@@ -1,7 +1,7 @@
 from sklearn.linear_model import LogisticRegression, LinearRegression, Ridge, SGDClassifier, ElasticNet, Lasso
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-from sklearn.svm import SVC, SVR
+from sklearn.svm import SVC, SVR, LinearSVC
 from sklearn.gaussian_process import GaussianProcessClassifier
 import time
 import numpy as np
