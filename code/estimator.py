@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.svm import SVC, SVR
 from sklearn.gaussian_process import GaussianProcessClassifier
 import time
+import numpy as np
 
 DOCKING_SCORE_CUTOFF = -60
 
@@ -62,27 +63,31 @@ class CommonEstimator(object):
 
     def predict(self, X):
         """Got to return `predict` for regressors, and `predict_proba` for classifiers"""
-        if self.verbose:
-            print('\tpredicting:')
-            start = time.time()
         if self.kind=='classifier':
             try:
                 preds = self.estimator.predict_proba(X)[:,1] #return the positive class probabilities=
             except:
                 preds = self.estimator.decision_function(X) #like proba, higher is better!
-            if self.verbose:
-                end = time.time()
-                print('Time:', end - start)
             return preds
         elif self.kind=='regressor':
             preds = -1 * self.estimator.predict(X) # we want the most negative scores to be the most positive predictions
-            if self.verbose:
-                end = time.time()
-                print('Time:', end - start)
             return preds
         else:
             raise ValueError('Got to set `kind` as either `classifier` or `regressor`')
 
-
+    def chunked_predict(self, X, num_chunks=200):
+        """Chunked predict just predicts for all ligands in 20 chunks. This is because
+        for higher fingerprint sizes, the whole array won't fit in memory when predicting."""
+        if self.verbose:
+            print('\tpredicting:')
+            start = time.time()
+        preds = list()
+        for chunk in np.array_split(np.arange(X.shape[0]),50):
+            preds.append(self.predict(X[chunk]))
+        if self.verbose:
+            end = time.time()
+            print('Time:', end - start)
+        return np.concatenate(preds)
+            
     def get_estimator(self):
         return self.estimator

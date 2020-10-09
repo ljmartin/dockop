@@ -32,14 +32,15 @@ algodict['svc1'] = 'Support Vector Classifier'
 count = 0
 
 
-for fp in ['maccs', 'morgan', 'topologicaltorsion', 'atompair', 'pattern']:
+for fp,size in zip(['maccs', 'morgan', 'topologicaltorsion', 'atompair', 'pattern'],
+                   [168, 256, 256, 256, 256]):
     for estimator in estimators[:]:
         if estimator['name'] in ['logreg1', 'rfc3000', 'svc1']:
             pass
         else:
             continue
 
-        f = h5py.File('../processed_data/'+fp+'_'+estimator['name']+'.hdf5', 'r')
+        f = h5py.File('../processed_data/'+fp+'_'+str(size)+'_'+estimator['name']+'.hdf5', 'r')
         nranks = list()
         aps= list()
         for _ in range(5):
@@ -80,6 +81,13 @@ error_bars = points.mark_rule().encode(
     x2='high_cr',
 )
 
-ch= alt.layer(points,error_bars,  data=df).facet(row='Fingerprint')
+
+line = alt.Chart().mark_rule().encode(
+    x='a:Q',
+)
+
+ch= alt.layer(points,error_bars,line,  data=df).transform_calculate(
+    a="0.013"
+).facet(row='Fingerprint')
 ch.save('../processed_data/initial_run.html')
 

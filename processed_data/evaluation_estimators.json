@@ -106,14 +106,6 @@
    "name": "adaboost100"
   },
   {
-   "estimator": "AdaBoostClassifier",
-   "kind": "classifier",
-   "kwargs": {
-    "n_estimators": 300
-   },
-   "name": "adaboost300"
-  },
-  {
    "estimator": "RandomForestClassifier",
    "kind": "classifier",
    "kwargs": {

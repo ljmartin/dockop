@@ -3,19 +3,15 @@ from scipy import sparse
 import h5py
 
 from rdkit import Chem
-from rdkit.Chem import rdFingerprintGenerator,MACCSkeys
-from rdkit.Chem.rdmolops import PatternFingerprint, LayeredFingerprint, RDKFingerprint
+from rdkit.Chem import rdMolDescriptors
 
 from tqdm import tqdm
-import bitstring
+from pathlib import Path
 
-import n2
-from sknetwork.hierarchy import Paris
-from sknetwork.hierarchy import cut_balanced, cut_straight
 
 class Setup(object):
     """Handles all the evaluation stuff for a given fingerprint setting."""
-    def __init__(self, fingerprint, fpsize, smifile, verbose=False):
+    def __init__(self, fingerprint, smifile, verbose=False):
         """This class just wraps all the analysis together so that it's easier later to 
         evaluate multiple fingerprint types and regressors/classifiers using a common interface. 
 
@@ -28,8 +24,6 @@ class Setup(object):
         is a single smiles code for a ligand. This comes from parse_data.py"""
         
         self.fingerprint_kind=fingerprint
-        self.fpsize=fpsize
-        self.fingerprint_function = self.get_fingerprint_function()
         #these two come from parse_data.py
         self.smifile = smifile+'_short.smi'
         self.scorefile = smifile+'_short.npy'
@@ -54,153 +48,160 @@ class Setup(object):
         """RDKit has lots of different ways to make fingerprits. 
         So this just returns the correct function for a given FP.
 
-        No input since the fingerprint type is set during init"""
-        if self.fingerprint_kind=='morgan':
-            function = rdFingerprintGenerator.GetMorganGenerator(fpSize=self.fpsize).GetFingerprint
-        if self.fingerprint_kind=='atompair':
-            function = rdFingerprintGenerator.GetAtomPairGenerator(fpSize=self.fpsize).GetFingerprint
-        if self.fingerprint_kind=='topologicaltorsion':
-            function = rdFingerprintGenerator.GetTopologicalTorsionGenerator(fpSize=self.fpsize).GetFingerprint
-        if self.fingerprint_kind=='maccs':
-            function = MACCSkeys.GenMACCSKeys
-        if self.fingerprint_kind=='rdk':
-            function = lambda mol: RDKFingerprint(mol, fpSize=self.fpsize)
-        if self.fingerprint_kind=='pattern':
-            function = lambda mol: PatternFingerprint(mol, fpSize=self.fpsize)
-        return function
-    
- 
-    
-    def write_fingerprints(self):
-        """Writes one of the rdkit fingerprints to a binary file (to save storage space)
-        Probably a more modern option is HDF5 but this works too."""
+        Source of parameters is (awesome) FPSim2 from ChEMBL: 
+        https://github.com/chembl/FPSim2/blob/master/FPSim2/io/chem.py
 
+        No input since the fingerprint type is set during init"""
+
+        if self.fingerprint_kind=='morgan':
+            function = rdMolDescriptors.GetMorganFingerprintAsBitVect
+            pars = { "radius": 2,
+                     "nBits": 65536,
+                     "invariants": [],
+                     "fromAtoms": [],
+                     "useChirality": False,
+                     "useBondTypes": True,
+                     "useFeatures": False,
+            }
+        if self.fingerprint_kind=='atompair':
+            function = rdMolDescriptors.GetHashedAtomPairFingerprintAsBitVect
+            pars = { "nBits": 65536,
+                     "minLength": 1,
+                     "maxLength": 30,
+                     "fromAtoms": 0,
+                     "ignoreAtoms": 0,
+                     "atomInvariants": 0,
+                     "nBitsPerEntry": 4,
+                     "includeChirality": False,
+                     "use2D": True,
+                     "confId": -1,
+            }
+        if self.fingerprint_kind=='topologicaltorsion':
+            function = rdMolDescriptors.GetHashedTopologicalTorsionFingerprintAsBitVect
+            pars = { "nBits": 65536,
+                     "targetSize": 4,
+                     "fromAtoms": 0,
+                     "ignoreAtoms": 0,
+                     "atomInvariants": 0,
+                     "includeChirality": False,
+            }
+        if self.fingerprint_kind=='maccs':
+            function = rdMolDescriptors.GetMACCSKeysFingerprint
+            pars = { }
+        if self.fingerprint_kind=='rdk':
+            function = Chem.RDKFingerprint
+            pars = { "minPath": 1,
+                    "maxPath": 7,
+                    "fpSize": 65536,
+                    "nBitsPerHash": 2,
+                    "useHs": True,
+                    "tgtDensity": 0.0,
+                    "minSize": 128,
+                    "branchedPaths": True,
+                    "useBondOrder": True,
+                    "atomInvariants": 0,
+                    "fromAtoms": 0,
+                    "atomBits": None,
+                    "bitInfo": None,
+            }
+        if self.fingerprint_kind=='pattern':
+            function = Chem.PatternFingerprint
+            pars = { "fpSize": 65536,
+                     "atomCounts": [],
+                     "setOnlyBits": None
+            }
+            
+        return function, pars
+
+
+    def write_fingerprints(self, overWrite=False):
+        """Writes one of the rdkit fingerprints to a sparse matrix.
+        Currently using size 65536 - this is usually way too large, 
+        but it leaves room to move. There is a folding function to
+        get back to common usage sizes. 
+
+        This function also checks if a fingerprint file has been written
+        already. If so, if requires `overWrite` to be True to re-write
+        the file. 
+        """
+
+        fingerprint_file = Path("../processed_data/"+self.fingerprint_kind+".npz")
+        if fingerprint_file.is_file() and not overWrite:
+            raise Exception('Fingerprint file exists already. Set `overWrite` to true to re-write it')
+        else:
+            pass
+        
         if self.verbose:
-            print('writing fingerprints to binary...')
-        binfile = open('../processed_data/fingerprints.bin', 'wb') #writing to this file.
+            print('Generating fingerprints at size 65536 (except MACCS)...')
+
+        fingerprint_function, pars = self.get_fingerprint_function()
+
         smifile = open(self.smifile, 'r') #file containing the smiles codes.
         smifile.readline() #read past the header.
 
+        #store bit indices in these:
+        row_idx = list()
+        col_idx = list()
+        
         #iterate through file, 
-        for line in tqdm(smifile, total=self.num_ligs, smoothing=0):
+        for count, line in tqdm(enumerate(smifile), total=self.num_ligs, smoothing=0):
             mol = Chem.MolFromSmiles(line[:-1])
-            fp = self.fingerprint_function(mol)
-            ##have to add a single zero for MACCS keys to make it divisible by 8
-            bs = bitstring.BitArray(bin=fp.ToBitString()+('0' if self.fingerprint_kind=='maccs' else '')) #turn it into binary.
-            binfile.write(bs.bytes)
-
-        binfile.close()
+            fp = fingerprint_function(mol, **pars)
+            onbits = list(fp.GetOnBits())
+            #these bits all have the same row:
+            row_idx += [count]*len(onbits)
+            #and the column indices of those bits:
+            col_idx+=onbits
+            
         smifile.close()
+        
+        #generate a sparse matrix out of the row,col indices:
+        fingerprint_matrix = sparse.coo_matrix((np.ones(len(row_idx)).astype(bool), (row_idx, col_idx)), 
+                          shape=(max(row_idx)+1, 65536))
+        #convert to csr matrix, it is better:
+        fingerprint_matrix =  sparse.csr_matrix(fingerprint_matrix)
+
+        #save file:
+        sparse.save_npz('../processed_data/'+self.fingerprint_kind+'.npz', fingerprint_matrix)
 
 
     def load_fingerprints(self):
-        """Turns the fingerprints binary file into a numpary array of size (num_ligs, fpsize)
-        It uses the bitstring library to read chunks of bits, where each chunk corresponds to one fp.
-        Then you just read the long string of bits with numpy and reshape! Hacky but it works well."""
+        """Load the npz file saved in the `write_fingerprints` step. 
+        """
+
+        fingerprint_file = Path("../processed_data/"+self.fingerprint_kind+".npz")
+        if not fingerprint_file.is_file():
+            raise Exception('Fingerprint file does not exists already. Run `write_fingerprints`')
 
         if self.verbose:
-            print('loading fingerprints from binary')
+            print('loading fingerprints npz file')
 
-        fpfile = open('../processed_data/fingerprints.bin', 'rb')
-        bits = ''
-        for _ in range(self.num_ligs):
-            fp_bytes = fpfile.read(int(self.fpsize/8)) 
-            bits += bitstring.BitArray(bytes=fp_bytes).bin
-        fpfile.close()
+        #use sparse fingerprints:
+        self.fingerprints = sparse.load_npz('../processed_data/'+self.fingerprint_kind+'.npz')
 
-        self.fingerprints = (np.fromstring(bits,'u1') - ord('0')).reshape(self.num_ligs, -1)
-
-    def build_ann_index(self, nthreads=1):
-        """WARNING: set threads correctly! I set it to 1 so you don't run out of memory.
-        This builds an approximate nearest neighbors index, used to build a kNN graph.
-
-        n2 is a good choice because it is fast and also allows streaming upload. Further,
-        it outperforms many other libraries according to ann_benchmarks. n2 is awesome.
-        It does not, however, offer dice, jaccard, or tanimoto. In practice cosine works fine."""
-
-        if self.verbose:
-            print('adding vector data to n2')
-        index = n2.HnswIndex(self.fpsize, "angular")
-        for fp in self.fingerprints:
-            index.add_data(fp)
-
-        if self.verbose:
-            print(f'building index with {nthreads}')
-            
-        index.build(n_threads=nthreads)
-        index.save('../processed_data/n2_index.hnsw')
         
-    def build_knn_graph(self, k):
-        """Builds a kNN graph using the approx. NN index built earlier. In practice,
-        in most nearest neighbor settings going above k=25 doesn't reall add any benefit."""
+    def fold_fingerprints(self, feature_matrix):
+        """Folds a fingerprint matrix by bitwise OR.
+        (scipy will perform the bitwise OR because the `data` is bool,
+        and it will not cast it to int when two Trues are added."""
+
+        ncols = feature_matrix.shape[1]
+        return feature_matrix[:,:ncols//2] + feature_matrix[:,ncols//2:]
+
+    def fold_to_size(self, size):
+        """Performs the `fold` operation multiple times to reduce fp 
+        length to the desired size."""
 
         if self.verbose:
-            print(f'constructing kNN graph with k={k}')
-            
-        index = n2.HnswIndex(self.fpsize, "angular")
-        index.load('../processed_data/n2_index.hnsw')
-
-        data = list()
-        indices = list()
-        indptr = list()
-        count = 0
-        indptr.append(count)
+            print(f'Folding to {size}...')
         
-        for i in tqdm(range(self.num_ligs)):
-            neighbor_idx = index.search_by_id(i,k,100, include_distances=True)[1:]
-            for nidx, distance in neighbor_idx:
-                data.append(1-distance)
-                indices.append(nidx)
-                count+=1
-            indptr.append(count)
+        feature_matrix = self.fingerprints
+        while feature_matrix.shape[1]>size:
+            feature_matrix = self.fold_fingerprints(feature_matrix)
 
-        self.adj = sparse.csr_matrix( ( data, indices, indptr), shape=(self.num_ligs, self.num_ligs), dtype=np.float16)
-
-        #do a check that the values in the adjacency matrix are in the right place:
-        for _ in range(50):
-            idx = np.random.choice(self.num_ligs)
-            adjacency_indices = self.adj[idx].indices
-            adjacency_distances = 1-self.adj[idx].data
-            query = index.search_by_id(idx, k, 100, include_distances=True)[1:]
-            index_indices = [i[0] for i in query]
-            index_distances = [i[1] for i in query]
-            assert np.allclose(index_distances, adjacency_distances, atol=1e-3) #high tolerance because np.float16 conversion.
-            assert np.allclose(adjacency_indices, index_indices)  
-    
-
-    def fit_paris(self):
-        """ Uses a super useful library scikit-network to fit a PARIS clusterer on the kNN graph.
-        PARIS clustering is hierarchical, so it returns a dendrogram instead of clusters. Later we cut the dendrogram.
-        see: Hierarchical Graph Clustering using Node Pair Sampling by Bonald et al  https://arxiv.org/abs/1806.01664"""
-
-        if self.verbose:
-            print('fitting PARIS hierarchical clustering')
-        paris = Paris()        
-        paris.fit(self.adj)
-        self.dendrogram = paris.dendrogram_
-
-    def cluster(self, method, n_clust=None, threshold=None):
-        """Cuts the dendrogram and returns cluster IDs. Straight cuts can either
-        set a defined number of clusters, or alternatively set a distance threshold. 
-        Cluster sizes can vary widely.
+        return feature_matrix
         
-        Balanced cuts respect a maximum cluster size. The number of clusters is determined 
-        on the fly. """
-
-        if self.verbose:
-            print(f'clustering with a {method} cut')
         
-        if method == 'straight':
-            if n_clust is not None and threshold is not None:
-                raise ValueError('Straight cut takes only one of n_clusters or threshold, not both.')
-            self.clusters = cut_straight(self.dendrogram, n_clust, threshold)
-        elif method == 'balanced':
-            if n_clust is None:
-                raise ValueError('Must set maximum cluster size (n_clust) for balanced_cut')
-            self.clusters = cut_balanced(self.dendrogram, n_clust)
-        else:
-            print('Choose \"straight\" or \"balanced\"')
-
     def random_split(self, number_train_ligs):
         """Simply selects some test and train indices"""
         idx = np.arange(self.num_ligs)
@@ -209,9 +210,10 @@ class Setup(object):
         self.test_idx = idx[number_train_ligs:]
 
         
-    def write_results(self, preds, name, repeat_number):
+    def write_results(self, preds, fpsize, name, repeat_number):
         """Writes an HDF5 file that stores the results. 
         preds: np.array: prediction scores for the test samples
+        fpsize: int: size the fingerprint was folded to
         name: str: the estimator name, as stored in the json
         repeat_number: int.
  
@@ -220,12 +222,9 @@ class Setup(object):
         - preds 
         and there should be one set of results for each repeat."""
 
-        if repeat_number==0:
-            #this is the first iteration. therefore overwrite any existing file that was there
-            outf = h5py.File('../processed_data/'+self.fingerprint_kind+'_'+name+'.hdf5', 'w')
-        else:
-            #second or thereafter iteration. 'a' is Append mode. 
-            outf = h5py.File('../processed_data/'+self.fingerprint_kind+'_'+name+'.hdf5', 'a')
+        #write the first time, append afterwards. 
+        write_option = 'w' if repeat_number==0 else 'a'
+        outf = h5py.File('../processed_data/'+self.fingerprint_kind+'_'+str(fpsize)+'_'+name+'.hdf5', write_option)
 
         rp = outf.create_group(f'repeat{repeat_number}')
 
