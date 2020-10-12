@@ -5,4 +5,4 @@
 `conda env create -f dockop.yml`
 
 
-![algo_fp_comparison](./processed_data/initial_run.svg)
+![algo_fp_comparison](./processed_data/fpsize_figure.svg)

@@ -34,50 +34,6 @@
    "name": "logreg1"
   },
   {
-   "estimator": "LogisticRegression",
-   "kind": "classifier",
-   "kwargs": {
-    "C": 10,
-    "max_iter": 1000,
-    "penalty": "l2",
-    "solver": "lbfgs"
-   },
-   "name": "logreg10"
-  },
-  {
-   "estimator": "LogisticRegression",
-   "kind": "classifier",
-   "kwargs": {
-    "C": 100,
-    "max_iter": 1000,
-    "penalty": "l2",
-    "solver": "lbfgs"
-   },
-   "name": "logreg100"
-  },
-  {
-   "estimator": "LogisticRegression",
-   "kind": "classifier",
-   "kwargs": {
-    "C": 1000,
-    "max_iter": 1000,
-    "penalty": "l2",
-    "solver": "lbfgs"
-   },
-   "name": "logreg1000"
-  },
-  {
-   "estimator": "LogisticRegression",
-   "kind": "classifier",
-   "kwargs": {
-    "C": 10000,
-    "max_iter": 1000,
-    "penalty": "l2",
-    "solver": "lbfgs"
-   },
-   "name": "logreg10000"
-  },
-  {
    "estimator": "LinearRegression",
    "kind": "regressor",
    "kwargs": {},
