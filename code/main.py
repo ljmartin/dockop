@@ -31,6 +31,7 @@ if __name__=='__main__':
         print('Already written fpfile')        
     setup.load_fingerprints()
     setup.load_scores()
+    
     feature_matrix = setup.fold_to_size(fpSize)
     
     #evaluation stuff goes here:    

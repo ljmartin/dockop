@@ -91,9 +91,9 @@ class Setup(object):
         if self.fingerprint_kind=='rdk':
             function = Chem.RDKFingerprint
             pars = { "minPath": 1,
-                    "maxPath": 7,
+                    "maxPath": 6, #reduced this from 7 to reduce numOnBits
                     "fpSize": 65536,
-                    "nBitsPerHash": 2,
+                    "nBitsPerHash": 1, #reduced from 2 to reduce numOnBits
                     "useHs": True,
                     "tgtDensity": 0.0,
                     "minSize": 128,
@@ -156,8 +156,9 @@ class Setup(object):
         smifile.close()
         
         #generate a sparse matrix out of the row,col indices:
+        unfolded_size = 166 if self.fingerprint_kind=='MACCS' else 65536
         fingerprint_matrix = sparse.coo_matrix((np.ones(len(row_idx)).astype(bool), (row_idx, col_idx)), 
-                          shape=(max(row_idx)+1, 65536))
+                          shape=(max(row_idx)+1, unfolded_size))
         #convert to csr matrix, it is better:
         fingerprint_matrix =  sparse.csr_matrix(fingerprint_matrix)
 
@@ -194,6 +195,8 @@ class Setup(object):
 
         if self.verbose:
             print(f'Folding to {size}...')
+        if self.fingerprint_kind=='MACCS':
+            return self.fingerprints
         
         feature_matrix = self.fingerprints
         while feature_matrix.shape[1]>size:
