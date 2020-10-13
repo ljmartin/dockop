@@ -7,3 +7,4 @@
 *hdf5
 *npz
 *~
+!processed_data/morgan.npz

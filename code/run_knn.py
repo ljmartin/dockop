@@ -75,8 +75,8 @@ if __name__=="__main__":
         preds = setup.scores[setup.train_idx][concat_fps]<-60
 
         aps = list()
-        for ncols in tqdm.tqdm(range(1,1500, 25)):
+        for ncols in tqdm.tqdm(range(1,1201)):
             ap = average_precision_score(true, preds[:,:ncols].mean(axis=1))
             aps.append(ap)
 
-        np.save('knn_'+str(fpSize)+'.npy', aps)
+        np.save('../processed_data/knn_'+str(fpSize)+'.npy', aps)
