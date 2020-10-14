@@ -24,4 +24,9 @@ lines = alt.Chart(df).mark_point(size=3).encode(
 #scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False)
 )
 
-lines.save('../processed_data/knn.html')
+hline = alt.Chart(df).mark_rule(size=1, strokeDash=[10, 10]).encode(
+    y=alt.Y('a:Q'),
+)
+
+ch = (lines+hline).transform_calculate(a="0.013")
+ch.save('../processed_data/knn.html')

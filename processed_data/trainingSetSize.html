@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.8.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}, "axis": {}, "header": {"titleFontSize": 15}}, "data": {"name": "data-20c10bbcd0f7d64e78f44f3887b0ccb0"}, "facet": {"type": "nominal", "field": "Fingerprint", "header": {"labelFontSize": 15}}, "spec": {"layer": [{"mark": {"type": "rule", "size": 1, "strokeDash": [10, 10]}, "encoding": {"y": {"type": "quantitative", "field": "a"}}}, {"mark": "errorbar", "encoding": {"color": {"type": "nominal", "field": "Estimator"}, "x": {"type": "quantitative", "axis": {"labelAngle": 60}, "field": "Training Set Size"}, "y": {"type": "quantitative", "field": "low_ap", "title": "Average Precision"}, "y2": {"field": "high_ap"}}}, {"mark": {"type": "line", "size": 3}, "encoding": {"color": {"type": "nominal", "field": "Estimator"}, "x": {"type": "quantitative", "field": "Training Set Size"}, "y": {"type": "quantitative", "field": "Average Precision"}}}, {"mark": {"type": "point", "filled": true, "size": 60}, "encoding": {"color": {"type": "nominal", "field": "Estimator"}, "x": {"type": "quantitative", "field": "Training Set Size"}, "y": {"type": "quantitative", "field": "Average Precision"}}}], "height": 250, "transform": [{"calculate": "0.013", "as": "a"}], "width": 350}, "columns": 2, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json", "datasets": {"data-20c10bbcd0f7d64e78f44f3887b0ccb0": [{"Fingerprint": "morgan", "Average Precision": 0.05023091666618713, "low_ap": 0.0242974042573676, "high_ap": 0.10097952307012965, "Training Set Size": 300, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.12668300597240117, "low_ap": 0.08439371205707556, "high_ap": 0.18586164945385503, "Training Set Size": 416, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.10626025786041973, "low_ap": 0.06048536673616665, "high_ap": 0.18003880468122027, "Training Set Size": 577, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.1357332985832269, "low_ap": 0.08549252866107515, "high_ap": 0.20875896802073513, "Training Set Size": 800, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.18548179730151898, "low_ap": 0.13546104801035566, "high_ap": 0.24866073893498303, "Training Set Size": 1110, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.24161584635560437, "low_ap": 0.22076518149239974, "high_ap": 0.26376919975270186, "Training Set Size": 1539, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.29292550010308116, "low_ap": 0.26876034130313287, "high_ap": 0.31831759649584596, "Training Set Size": 2135, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.3185432729029901, "low_ap": 0.30331768374258694, "high_ap": 0.33416655016251035, "Training Set Size": 2961, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.3372453925916182, "low_ap": 0.31671543854802187, "high_ap": 0.35840808385240636, "Training Set Size": 4107, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.3552563418568425, "low_ap": 0.34422347487069926, "high_ap": 0.36644522724636897, "Training Set Size": 5696, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.3760029468397299, "low_ap": 0.36233927662886845, "high_ap": 0.3898668429433588, "Training Set Size": 7900, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.3872426001771453, "low_ap": 0.3781290517315694, "high_ap": 0.3964357748935115, "Training Set Size": 10956, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.3989679581542502, "low_ap": 0.3942907285171696, "high_ap": 0.4036636952140893, "Training Set Size": 15196, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.41461902053966193, "low_ap": 0.40430054435202495, "high_ap": 0.4250129535964504, "Training Set Size": 21075, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.43110969842667723, "low_ap": 0.4270241915262426, "high_ap": 0.4352046038929299, "Training Set Size": 29230, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.4378551392002665, "low_ap": 0.42984520698344275, "high_ap": 0.4458976006895456, "Training Set Size": 40540, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.45654154574961836, "low_ap": 0.4519101251273342, "high_ap": 0.46118049284062146, "Training Set Size": 56226, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.4664393674434442, "low_ap": 0.4639359510226328, "high_ap": 0.4689444752422373, "Training Set Size": 77981, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.4813971797738199, "low_ap": 0.4784947449958223, "high_ap": 0.48430087053319676, "Training Set Size": 108153, "Estimator": "logreg0.1"}, {"Fingerprint": "morgan", "Average Precision": 0.49014495863605095, "low_ap": 0.4866933862954816, "high_ap": 0.49359747085009475, "Training Set Size": 150000, "Estimator": "logreg0.1"}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
