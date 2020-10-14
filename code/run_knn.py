@@ -62,7 +62,8 @@ if __name__=="__main__":
     setup.random_split(15000)
     true = setup.scores[setup.test_idx]<-60
     
-    for fpSize in 256, 512, 1024, 2048, 4096, 8192:
+    #for fpSize in 256, 512, 1024, 2048, 4096, 8192:
+    for fpSize in 16384, 32768, 65536:
         fp = setup.fold_to_size(fpSize)
 
         #parallelize kNN calculation
