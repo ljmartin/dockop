@@ -1,4 +1,0 @@
-
-
-python parse_data.py ../data/AmpC_screen_table.csv 2000000 ../processed_data/AmpC
-
