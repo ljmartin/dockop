@@ -24,6 +24,8 @@ Linear hyperplane classifiers are fast to fit and may perform better than kNN fo
 
 ## How many ligands are required in the training set?
 
-The more ligands used in training the model, the better that model performs. 
+The more ligands used in training the model, the better that model performs. Obviously this leads to a trade-off - you can get a better model by docking lots of ligands, but then you save less time using the model. What to do?
 
 ![trainingSetSize](./processed_data/trainingSetSize.svg)
+
+![time](./processed_data/time_optimisation.svg)

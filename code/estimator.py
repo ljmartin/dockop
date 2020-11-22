@@ -6,13 +6,12 @@ from sklearn.gaussian_process import GaussianProcessClassifier
 import time
 import numpy as np
 
-DOCKING_SCORE_CUTOFF = -60
 
 class CommonEstimator(object):
     """ This class just provides a common interface for both classifiers and regressors.
     Makes things easier in the evaluation stage, I can just iterate through estimator:parameter 
     pairs from a JSON and it will work."""
-    def __init__(self, parameters, verbose=False):
+    def __init__(self, parameters, cutoff=-60, verbose=False):
         """
         Instantiate this with a set of hyperparameters to get an sklearn estimator object 
         with fit and predict methods that will work for both classifiers and regressors.
@@ -28,7 +27,7 @@ class CommonEstimator(object):
                 `LogisticRegression` or `LinearRegression`.
             - 'kind': str. one of `classifier` or `regressor`
         """
-        self.cutoff = DOCKING_SCORE_CUTOFF
+        self.cutoff = cutoff
         #these are the hyperparameters:
         self.kwargs = parameters['kwargs']
 

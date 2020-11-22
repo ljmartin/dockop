@@ -7,7 +7,7 @@ select N ligands from the 99million in the AmpC screen:
 ```
 conda activate dockop
 
-python parse_data.py ../data/AmpC_screen_table.csv 10000000 ../processed_data/AmpC
+python parse_data.py ../data/AmpC_screen_table.csv 1000000 ../processed_data/AmpC
 ```
 
 then choose a fingerprint (from 'morgan', 'atompair', 'rdk', 'maccs', 'pattern', 'topologicaltorsion') and a fingerprint size.
@@ -18,8 +18,20 @@ from `../processed_data/evaluation_estimators.json` and evaluates them using ran
 Monte Carlo Cross Validation.
 
 ```
-python main.py morgan 128 ../processed_data/evaluation_estimators.json ../processed_data/AmpC
+python main.py morgan 128 15000 ../processed_data/evaluation_estimators.json ../processed_data/AmpC
 
 ```
 
-To perform the kNN analysis, just run `run_knn.py`. There are no options but see inside the script for what's going on or email for help. 
+To perform the kNN analysis, just run `run_knn.py`. There are no options but see inside the script for what's going on or email for help.
+
+
+# Dopamine receptor type D4
+
+Having analyzed various fingerprints, folding sizes, algorithms, and training set sizes we
+are ready to simuilate a real docking campaign using the D4 receptor. Start by sampling ~40,000 ligands
+from the virtual screening library:
+
+```
+python parse_data.py ../data/table_name_smi_energy_hac_lte_25_title.csv 40000 ../processed_data/D4_sample
+```
+

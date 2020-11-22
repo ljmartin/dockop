@@ -25,8 +25,9 @@ class Setup(object):
         
         self.fingerprint_kind=fingerprint
         #these two come from parse_data.py
-        self.smifile = smifile+'_short.smi'
-        self.scorefile = smifile+'_short.npy'
+        self.base = smifile
+        self.smifile = self.base+'_short.smi'
+        self.scorefile = self.base+'_short.npy'
         self.num_ligs = sum(1 for line in open(self.smifile))-1 #it comes in handy a few times to know how many ligands there are
         self.verbose=verbose
 
@@ -125,7 +126,7 @@ class Setup(object):
         the file. 
         """
 
-        fingerprint_file = Path("../processed_data/"+self.fingerprint_kind+".npz")
+        fingerprint_file = Path("../processed_data/"+self.base+'_'+self.fingerprint_kind+".npz")
         if fingerprint_file.is_file() and not overWrite:
             raise Exception('Fingerprint file exists already. Set `overWrite` to true to re-write it')
         else:
@@ -163,14 +164,14 @@ class Setup(object):
         fingerprint_matrix =  sparse.csr_matrix(fingerprint_matrix)
 
         #save file:
-        sparse.save_npz('../processed_data/'+self.fingerprint_kind+'.npz', fingerprint_matrix)
+        sparse.save_npz('../processed_data/'+self.base+'_'+self.fingerprint_kind+'.npz', fingerprint_matrix)
 
 
     def load_fingerprints(self):
         """Load the npz file saved in the `write_fingerprints` step. 
         """
 
-        fingerprint_file = Path("../processed_data/"+self.fingerprint_kind+".npz")
+        fingerprint_file = Path("../processed_data/"+self.base+'_'+self.fingerprint_kind+".npz")
         if not fingerprint_file.is_file():
             raise Exception('Fingerprint file does not exists already. Run `write_fingerprints`')
 
@@ -178,7 +179,7 @@ class Setup(object):
             print('loading fingerprints npz file')
 
         #use sparse fingerprints:
-        self.fingerprints = sparse.load_npz('../processed_data/'+self.fingerprint_kind+'.npz')
+        self.fingerprints = sparse.load_npz('../processed_data/'+self.base+'_'+self.fingerprint_kind+'.npz')
 
         
     def fold_fingerprints(self, feature_matrix):

@@ -40,7 +40,9 @@ if __name__=='__main__':
         for repeat in range(5):
             setup.random_split(trainingSetSize)
                 
-            common_estimator = CommonEstimator(estimator, setup.verbose)
+            common_estimator = CommonEstimator(estimator, verbose=setup.verbose)
+            print(setup.train_idx.shape)
+            print(setup.scores.shape)
             common_estimator.fit(feature_matrix[setup.train_idx], setup.scores[setup.train_idx])
             pred = common_estimator.chunked_predict(feature_matrix[setup.test_idx])
 

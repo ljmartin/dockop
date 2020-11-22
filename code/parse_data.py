@@ -18,8 +18,10 @@ smifile.readline() #read past the header.
 
 count = 0
 for line in smifile:
-    words = line.split(',') 
-    if words[1]=='no_score':
+    words = line[:-1].split(',')
+    if len(words[2])<1:
+        continue
+    if words[2]=='no_score':
         break
     count+=1
 smifile.close()
@@ -41,6 +43,8 @@ scores = list()
 for line in tqdm(smifile, total=count, smoothing=0):
     if random.choices([True,False], weights=[p, 1-p])[0]:
         words = line[17:-1].split(',') #removes the zinc ID and trailing newline
+        if len(words[1])<1:
+            continue
         if words[1]=='no_score':
             break
         else:

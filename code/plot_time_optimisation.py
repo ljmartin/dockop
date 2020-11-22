@@ -1,6 +1,6 @@
 import json
 from set_up import Setup
-
+from scipy.stats import t
 import h5py
 from scipy.special import logit
 import pandas as pd
@@ -131,7 +131,7 @@ for desired_num_hits in np.linspace(10000,300000,11):
         
         print(time_mean)
         
-        df.loc[count] = [time_mean, time[0], time[1], size, desired_num_hits]
+        df.loc[count] = [time_mean, time_hpd[0], time_hpd[1], size, desired_num_hits]
         count+=1
 
 
