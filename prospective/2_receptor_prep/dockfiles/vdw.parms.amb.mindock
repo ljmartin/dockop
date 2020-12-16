@@ -1,0 +1,34 @@
+!  Use this vdw parameter file when using minimization, either within dock
+!  or with a post-dock minimizer (dockmin_dfp, dockmin_sim)
+!
+!  AMBER-based van der Waals parameters (see vdwinfo)
+!  polar H has been made non-volumeless for energy minimization
+!type      sqrt(A)      sqrt(B)
+   1        888.79        24.81    sp2 and sp C
+   2       1586.37        35.05    CH3 (united atom)
+   3       1128.12        27.96    CH2 (united atom)
+   4        769.72        21.49    CH (united atom)
+   5        533.20        16.16    sp3 C
+   6          0.37         0.31    H on polar atom
+   7         85.37         4.13    H on C
+   8        735.31        24.25    sp2 and sp N
+   9        725.70        20.26    quaternary sp3 N
+  10        888.79        24.81    sp3 N
+  11        480.19        20.72    sp2 O
+  12        500.18        19.68    sp3 O
+  13       2454.77        46.86    P
+  14       1831.79        40.48    S
+  15        251.02        11.92    F
+  16       2194.13        46.37    Cl
+  17       3885.92        66.31    Br
+  18       6817.37        92.86    I
+  19        235.24        10.15    Na+ (unhydrated), K+
+  20         51.92         5.73    Mg++, Li+, Al+++, M++ (except Ca++), 
+! 20 is also Ni & Cu (apparently)
+  21        339.55        14.65    Ca++
+  22       1971.47        37.63    Cl- (unhydrated)
+  23        762.07        24.38    Lennard-Jones water particle
+  24       3885.92        66.31    Si (same numbers as Br)
+  25          0.00         0.00    Du/LP (same numbers as H on polar atom)
+  26         53.67         7.33    Zn2+ (Austin)
+!  26       1264.47        45.49    Zn2+ (niu, see tack's paper in med.res) 

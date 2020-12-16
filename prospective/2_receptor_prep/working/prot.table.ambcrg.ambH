@@ -1,0 +1,769 @@
+!CORRESPONDENCE OF PDB TYPES WITH CHARGES & NUMERICAL TYPE INDICATORS
+!
+! --AMBER united-atom charges, based on Weiner et al.,
+! JACS 106, 765 (1984)
+! --names as per AMBER convention
+!
+! --termini not from the reference above; 0.416=(0.248 + 1.0)/3 
+! --0.248 is the amide H charge in the residues above
+! --simplistic way of making the N-terminus have a net charge of +1
+! and the C-terminus have a net charge of -1
+!
+!NOTE: the partial charges here don't matter AT ALL. see amb.crg.oxt for the 
+! partial charge file that matters. the only column here that matters is the 
+! tt column right here  TT that controls the dock atom typing
+!
+!aaaxxxrrrnnnncqqqqqqqqxtt   format (A4, 3x, A3, A4, A1, F8.3, 1x, I2) 
+!
+ N     ALA       -0.520  8         ALANINE
+ CA    ALA        0.215  4
+ C     ALA        0.526  1       
+ O     ALA       -0.500 11
+ H     ALA        0.248  6
+ CB    ALA        0.031  2
+ N     ARG       -0.520  8         ARGININE (+)
+ C     ARG        0.526  1  
+ O     ARG       -0.500 11 
+ CA    ARG        0.237  4
+ CB    ARG        0.049  3
+ CG    ARG        0.058  3
+ CD    ARG        0.111  3
+ NE    ARG       -0.493  8
+ CZ    ARG        0.813  1 
+ NH1   ARG       -0.635  8
+ NH2   ARG       -0.634  8
+ H     ARG        0.248  6
+ HE    ARG        0.294  6
+HH11   ARG        0.361  6
+HH12   ARG        0.362  6 
+HH21   ARG        0.361  6 
+HH22   ARG        0.362  6
+ N     ASN       -0.520  8         ASPARAGINE
+ CA    ASN        0.217  4
+ C     ASN        0.526  1  
+ O     ASN       -0.500 11   
+ CB    ASN        0.003  3
+ ND2   ASN       -0.867  8    
+ AD2   ASN       -0.867  8
+ CG    ASN        0.675  1   
+ OD1   ASN       -0.470 11   
+ AD1   ASN       -0.470 11
+ H     ASN        0.248  6
+HD21   ASN        0.344  6
+HD22   ASN        0.344  6
+ OD1   ASP       -0.706 11         ASPARTIC ACID (-)
+ OD2   ASP       -0.706 11
+ CA    ASP        0.246  4
+ CB    ASP       -0.208  3
+ CG    ASP        0.620  1
+ N     ASP       -0.520  8
+ C     ASP        0.526  1
+ O     ASP       -0.500 11
+ H     ASP        0.248  6
+ N     CYS       -0.520  8         CYSTEINE
+ C     CYS        0.526  1
+ O     CYS       -0.500 11
+ CA    CYS        0.146  4
+ CB    CYS        0.100  3
+ SG    CYS       -0.135 14
+ H     CYS        0.248  6
+ HG    CYS        0.135  6
+ N     CYM       -0.463  8        CYSTEINE NEGATIVE CHARGE - COORDINATING METAL
+ C     CYM        0.616  1
+ O     CYM       -0.504 11
+ CA    CYM        0.083  4
+ CB    CYM       -0.248  3
+ SG    CYM       -0.736 14
+ H     CYM        0.252  6
+ N     CYX       -0.520  8         CYSTINE (disulfide bridge)
+ C     CYX        0.526  1
+ O     CYX       -0.500 11
+ CA    CYX        0.088  4   
+ CB    CYX        0.143  3
+ SG    CYX        0.015 14
+ H     CYX        0.248  6 
+ N     GLN       -0.520  8         GLUTAMINE
+ CA    GLN        0.210  4
+ C     GLN        0.526  1
+ O     GLN       -0.500 11
+ CB    GLN        0.053  3
+ CG    GLN       -0.043  3
+ NE2   GLN       -0.867  8
+ AE2   GLN       -0.867  8
+ CD    GLN        0.675  1
+ OE1   GLN       -0.470 11
+ AE1   GLN       -0.470 11
+ H     GLN        0.248  6
+HE21   GLN        0.344  6
+HE22   GLN        0.344  6    
+ OE1   GLU       -0.706 11         GLUTAMIC ACID (-)
+ OE2   GLU       -0.706 11
+ CD    GLU        0.620  1
+ N     GLU       -0.520  8
+ C     GLU        0.526  1
+ O     GLU       -0.500 11
+ CA    GLU        0.246  4
+ CB    GLU        0.000  3
+ CG    GLU       -0.208  3
+ H     GLU        0.248  6
+ N     GLY       -0.520  8         GLYCINE
+ CA    GLY        0.246  4
+ C     GLY        0.526  1
+ O     GLY       -0.500 11
+ H     GLY        0.248  6
+ N     HID       -0.520  8         HISTIDINE  neutral delta proton  
+ C     HID        0.526  1
+ O     HID       -0.500 11
+ CA    HID        0.219  4
+ CB    HID        0.060  3
+ CG    HID        0.089  1
+ CD2   HID        0.145  1
+ AD2   HID        0.145  1
+ CE1   HID        0.384  1
+ AE1   HID        0.384  1
+ ND1   HID       -0.444  8
+ AD1   HID       -0.444  8
+ NE2   HID       -0.527  8
+ AE2   HID       -0.527  8
+ H     HID        0.248  6
+ HD1   HID        0.320  6
+ N     HIE       -0.520  8         HISTIDINE  neutral epsilon proton
+ C     HIE        0.526  1
+ O     HIE       -0.500 11
+ CA    HIE        0.219  4
+ CB    HIE        0.060  3
+ CG    HIE        0.112  1
+ CD2   HIE        0.122  1
+ AD2   HIE        0.122  1
+ CE1   HIE        0.384  1
+ AE1   HIE        0.384  1
+ ND1   HIE       -0.527  8
+ AD1   HIE       -0.527  8
+ NE2   HIE       -0.444  8
+ AE2   HIE       -0.444  8
+ H     HIE        0.248  6
+ HE2   HIE        0.320  6
+ N     HIP       -0.520  8         HISTIDINE (+)
+ C     HIP        0.526  1
+ O     HIP       -0.500 11
+ CA    HIP        0.195  4
+ CB    HIP        0.211  3
+ CG    HIP        0.103  1
+ CD2   HIP        0.353  1
+ AD2   HIP        0.353  1
+ CE1   HIP        0.719  1
+ AE1   HIP        0.719  1
+ ND1   HIP       -0.613  8
+ AD1   HIP       -0.613  8
+ NE2   HIP       -0.686  8
+ AE2   HIP       -0.686  8
+ H     HIP        0.248  6
+ HD1   HIP        0.478  6
+ HE2   HIP        0.486  6
+ N     ILE       -0.520  8         ISOLEUCINE
+ C     ILE        0.526  1
+ O     ILE       -0.500 11
+ CA    ILE        0.199  4
+ CB    ILE        0.030  4
+ CG1   ILE        0.017  3
+ CG2   ILE        0.001  2
+ CD1   ILE       -0.001  2
+ H     ILE        0.248  6
+ N     LEU       -0.520  8         LEUCINE
+ C     LEU        0.526  1
+ O     LEU       -0.500 11
+ CA    LEU        0.204  4
+ CB    LEU        0.016  3
+ CG    LEU        0.054  4
+ CD1   LEU       -0.014  2
+ CD2   LEU       -0.014  2
+ H     LEU        0.248  6 
+ N     LYS       -0.520  8         LYSINE (+)
+ C     LYS        0.526  1
+ O     LYS       -0.500 11
+ CA    LYS        0.227  4
+ CB    LYS        0.039  3
+ CG    LYS        0.053  3
+ CD    LYS        0.048  3
+ CE    LYS        0.218  3
+ NZ    LYS       -0.272  9
+ H     LYS        0.248  6
+ HZ1   LYS        0.311  6
+ HZ2   LYS        0.311  6
+ HZ3   LYS        0.311  6
+ N     MET       -0.520  8         METHIONINE
+ C     MET        0.526  1
+ O     MET       -0.500 11
+ CA    MET        0.137  4
+ CB    MET        0.037  3
+ CG    MET        0.090  3
+ SD    MET       -0.025 14
+ CE    MET        0.007  2
+ H     MET        0.248  6 
+ N     PHE       -0.520  8         PHENYLALANINE
+ C     PHE        0.526  1
+ O     PHE       -0.500 11
+ CA    PHE        0.214  4
+ CB    PHE        0.038  3
+ CG    PHE        0.011  1
+ CD1   PHE       -0.011  1
+ CD2   PHE       -0.011  1
+ CE1   PHE        0.004  1
+ CE2   PHE        0.004  1
+ CZ    PHE       -0.003  1
+ H     PHE        0.248  6 
+ N     PRO       -0.257  8         PROLINE
+ CA    PRO        0.112  4
+ C     PRO        0.526  1
+ O     PRO       -0.500 11
+ CB    PRO       -0.001  3
+ CG    PRO        0.036  3
+ CD    PRO        0.084  3
+ N     SER       -0.520  8         SERINE
+ C     SER        0.526  1
+ O     SER       -0.500 11
+ CA    SER        0.292  4
+ CB    SER        0.194  3
+ OG    SER       -0.550 12
+ H     SER        0.248  6 
+ HG    SER        0.310  6
+ N     THR       -0.520  8         THREONINE
+ C     THR        0.526  1
+ O     THR       -0.500 11
+ OG1   THR       -0.550 12
+ CA    THR        0.268  4
+ CB    THR        0.211  4
+ CG2   THR        0.007  2
+ H     THR        0.248  6
+ HG1   THR        0.310  6
+ N     TRP       -0.520  8         TRYPTOPHAN
+ C     TRP        0.526  1
+ O     TRP       -0.500 11
+ CA    TRP        0.248  4
+ CB    TRP        0.020  3
+ CG    TRP        0.046  1
+ CD1   TRP        0.117  1
+ CD2   TRP       -0.275  1
+ NE1   TRP       -0.330  8
+ CE2   TRP        0.000  1
+ CE3   TRP        0.145  1
+ CZ2   TRP        0.029  1
+ CZ3   TRP       -0.082  1
+ CH2   TRP        0.034  1
+ H     TRP        0.248  6
+ HE1   TRP        0.294  6
+ N     TYR       -0.520  8         TYROSINE
+ C     TYR        0.526  1
+ O     TYR       -0.500 11
+ OH    TYR       -0.368 12
+ CA    TYR        0.245  4
+ CB    TYR        0.022  3
+ CG    TYR       -0.001  1
+ CD1   TYR       -0.035  1
+ CD2   TYR       -0.035  1
+ CE1   TYR        0.100  1
+ CE2   TYR        0.100  1
+ CZ    TYR       -0.121  1
+ H     TYR        0.248  6
+ HH    TYR        0.339  6
+ N     VAL       -0.520  8         VALINE
+ C     VAL        0.526  1
+ O     VAL       -0.500 11
+ CA    VAL        0.201  4
+ CB    VAL        0.033  4
+ CG1   VAL        0.006  2
+ CG2   VAL        0.006  2
+ H     VAL        0.248  6
+ O     ACE       -0.500 11         ACETYL END GROUP
+ C     ACE        0.526  1
+ CH3   ACE       -0.026  2
+ N     NME       -0.520  8         N-METHYL END GROUP
+ HN    NME        0.248  6
+ CM    NME        0.272  2
+ N     NMA       -0.520  8         N-METHYL END GROUP (MAESTRO)
+ HN    NMA        0.248  6
+ CM    NMA        0.272  2
+ OH2   TIP       -0.834 12         TIP3P WATER CHARGES
+ H1    TIP        0.417  6
+ H2    TIP        0.417  6
+ OW    WAT       -0.834 12         TIP3P WATER CHARGES
+ HW1   WAT        0.417  6
+ HW2   WAT        0.417  6
+ O     HOH       -0.834 12         TIP3P WATER CHARGES
+ H01   HOH        0.417  6
+ H02   HOH        0.417  6
+ OH2   SPC       -0.82  12         SPC WATER CHARGES
+ H1    SPC        0.41   6
+ H2    SPC        0.41   6
+ HN1              0.416  6         N-TERMINAL H
+ HN2              0.416  6         N-TERMINAL H
+ HN3              0.416  6         N-TERMINAL H
+ HN1   PRO        0.500  6         N-TERMINAL H OF PRO
+ HN2   PRO        0.500  6         N-TERMINAL H OF PRO
+ HN3   PRO        0.500  6         N-TERMINAL H OF PRO
+ OT              -1.00  11         C-TERMINAL OXT
+ OXT             -1.00  11         C-TERMINAL OXT
+ OT1             -0.75  11         C-TERMINAL OXYGENS,
+ OT2             -0.75  11           CHARGE-EQUALIZED
+ NA               1.00  19
+ CU               1.40  20
+ ZN               1.40  26
+ CO               2.00  20
+ FE               1.40  20
+ MG               1.40  20
+ MN               2.00  20
+ LI               1.00  20
+ AL               3.00  20
+ NI               1.40  20
+ CA               2.00  21
+ CL              -1.00  22
+NA                1.00  19
+CU                1.40  20
+ZN                1.40  26
+CO                2.00  20
+FE                1.40  20
+MG                1.40  20
+MN                2.00  20
+LI                1.00  20
+AL                3.00  20
+NI                1.40  20
+CA                2.00  21
+CL               -1.00  22
+ LJ               0.00  23         LENNARD-JONES WATER PARTICLE
+ LP               0.00   6         LONE PAIR
+ C     CBX        0.000  1         created by S. McGovern, JJI
+ O1    CBX       -0.500 11
+ O2    CBX       -0.500 11
+ C1    GAR        0.194  4         GAR for GART - susan
+ O6    GAR       -0.240 12
+ C2    GAR        0.194  4
+ O8    GAR       -0.240 12
+ C3    GAR        0.292  4
+ O4    GAR       -0.510 12
+ C5    GAR        0.211  4
+ C10   GAR        0.211  3
+ O12   GAR       -0.510 12
+ N19   GAR       -0.272  8
+ C21   GAR        0.526  1
+ O22   GAR       -0.500 11
+ C23   GAR        0.246  3
+ N24   GAR        1.000  9
+ P15   GAR        1.390 13
+ O16   GAR       -0.847 12
+ O17   GAR       -0.847 12
+ O18   GAR       -0.847 12         
+ PA    NAP        1.468 13         NAP AM1-BCC summed to heavies (MMM)
+ O1A   NAP       -0.862 12
+ O2A   NAP       -0.886 12
+ O5B   NAP       -0.576 12
+ C5B   NAP        0.282  3
+ C4B   NAP        0.186  4
+ O4B   NAP       -0.401 12
+ C3B   NAP        0.127  4
+ O3B   NAP       -0.157 12
+ C2B   NAP        0.277  4
+ O2B   NAP       -0.569 12
+ C1B   NAP        0.546  4
+ N9A   NAP       -0.630  8
+ C8A   NAP        0.632  1
+ N7A   NAP       -0.572  8
+ C5A   NAP       -0.207  1
+ C6A   NAP        0.671  1
+ N6A   NAP       -0.082  8
+ N1A   NAP       -0.814  8
+ C2A   NAP        0.693  1
+ N3A   NAP       -0.713  8
+ C4A   NAP        0.568  1
+ O3    NAP       -0.680 12
+ PN    NAP        1.450 13
+ O1N   NAP       -0.879 12
+ O2N   NAP       -0.814 12
+ O5D   NAP       -0.578 12
+ C5D   NAP        0.332  3
+ C4D   NAP        0.259  4
+ O4D   NAP       -0.384 12
+ C3D   NAP        0.227  4
+ O3D   NAP       -0.178 12
+ C2D   NAP        0.129  4
+ O2D   NAP       -0.188 12
+ C1D   NAP        0.235  4
+ N1N   NAP        0.001  8
+ C2N   NAP        0.238  1
+ C3N   NAP       -0.153  1
+ C7N   NAP        0.635  1
+ O7N   NAP       -0.582 11
+ N7N   NAP       -0.035  8
+ C4N   NAP        0.230  1
+ C5N   NAP        0.039  1
+ C6N   NAP        0.350  1
+ P2B   NAP        1.429 13
+ O1X   NAP       -0.688 12
+ O2X   NAP       -0.688 12
+ O3X   NAP       -0.688 12
+ C1    PVL       -0.052  1         PYRUVOYL GROUP
+ C2    PVL        0.526  1
+ C3    PVL        0.526  1
+ O3    PVL       -0.500 11
+ O2    PVL       -0.500 11
+ PA    NDP        1.456 13         NDP AM1-BCC summed to heavies (MMM)
+ O1A   NDP       -0.863 12
+ O2A   NDP       -0.863 12
+ O5B   NDP       -0.572 12
+ C5B   NDP        0.281  3
+ C4B   NDP        0.187  4
+ O4B   NDP       -0.395 12
+ C3B   NDP        0.122  4
+ O3B   NDP       -0.156 12
+ C2B   NDP        0.266  4
+ O2B   NDP       -0.567 12
+ C1B   NDP        0.543  4
+ N9A   NDP       -0.628  8
+ C8A   NDP        0.643  1
+ N7A   NDP       -0.575  8
+ C5A   NDP       -0.206  1
+ C6A   NDP        0.680  1
+ N6A   NDP       -0.087  8
+ N1A   NDP       -0.821  8
+ C2A   NDP        0.685  1
+ N3A   NDP       -0.715  8
+ C4A   NDP        0.566  1
+ O3    NDP       -0.679 12
+ PN    NDP        1.447 13
+ O1N   NDP       -0.856 12
+ O2N   NDP       -0.856 12
+ O5D   NDP       -0.580 12
+ C5D   NDP        0.317  3
+ C4D   NDP        0.240  4
+ O4D   NDP       -0.391 12
+ C3D   NDP        0.188  4
+ O3D   NDP       -0.199 12
+ C2D   NDP        0.122  4
+ O2D   NDP       -0.204 12
+ C1D   NDP        0.461  4
+ N1N   NDP       -0.526  8
+ C2N   NDP        0.294  1
+ C3N   NDP       -0.303  1
+ C7N   NDP        0.683  1
+ O7N   NDP       -0.666 11
+ N7N   NDP       -0.117  8
+ C4N   NDP        0.137  3
+ C5N   NDP       -0.094  1
+ C6N   NDP        0.240  1
+ P2B   NDP        1.437 13
+ O1X   NDP       -0.692 12
+ O2X   NDP       -0.692 12
+ O3X   NDP       -0.692 12
+ PA    NAD        1.461 13         NAD AM1-BCC summed to heavies (MMM)
+ O1A   NAD       -0.857 12
+ O2A   NAD       -0.875 12
+ O5B   NAD       -0.575 12
+ C5B   NAD        0.298  3
+ C4B   NAD        0.186  4
+ O4B   NAD       -0.389 12
+ C3B   NAD        0.125  4
+ O3B   NAD       -0.177 12
+ C2B   NAD        0.172  4
+ O2B   NAD       -0.167 12
+ C1B   NAD        0.562  4
+ N9A   NAD       -0.645  8
+ C8A   NAD        0.628  1
+ N7A   NAD       -0.546  8
+ C5A   NAD       -0.209  1
+ C6A   NAD        0.686  1
+ N6A   NAD       -0.056  8
+ N1A   NAD       -0.807  8
+ C2A   NAD        0.709  1
+ N3A   NAD       -0.747  8
+ C4A   NAD        0.568  1
+ O3    NAD       -0.681 12
+ PN    NAD        1.440 13
+ O1N   NAD       -0.878 12
+ O2N   NAD       -0.813 12
+ O5D   NAD       -0.575 12
+ C5D   NAD        0.328  3
+ C4D   NAD        0.265  4
+ O4D   NAD       -0.386 12
+ C3D   NAD        0.222  4
+ O3D   NAD       -0.176 12
+ C2D   NAD        0.134  4
+ O2D   NAD       -0.188 12
+ C1D   NAD        0.259  4
+ N1N   NAD        0.036  8
+ C2N   NAD        0.188  1
+ C3N   NAD       -0.159  1
+ C7N   NAD        0.652  1
+ O7N   NAD       -0.569 11
+ N7N   NAD       -0.015  8
+ C4N   NAD        0.224  1
+ C5N   NAD        0.055  1
+ C6N   NAD        0.292  1
+ N1    UMP       -0.235  8
+ C2    UMP        0.315  3
+ N3    UMP       -0.077  8
+ C4    UMP        0.245  3
+ C5    UMP        0.083  3
+ C6    UMP        0.087  3
+ O2    UMP       -0.252 11
+ O4    UMP       -0.270 11
+ C1'   UMP        0.216  2
+ C2'   UMP        0.085  2
+ C3'   UMP        0.149  2
+ C4'   UMP        0.175  2
+ O3'   UMP       -0.179 12
+ O4'   UMP       -0.350 12
+ C5'   UMP        0.199  2
+ O5'   UMP       -0.352 12
+ P     UMP        0.061 13
+ OP1   UMP       -0.633 12
+ OP2   UMP       -0.633 12
+ OP3   UMP       -0.633 12
+ P     ACP        1.390 13         For AK, niu
+ O2    ACP       -0.500 11
+ O1    ACP       -0.500 12
+ O3    ACP       -0.500 11
+ C3    ACP        0.353  3
+ O2'   ACP       -0.500 12
+ C2'   ACP        0.353  4 
+ C1'   ACP        0.353  4
+ N9    ACP       -0.520  8 
+ C4    ACP        0.353  1 
+ N3    ACP       -0.520  8 
+ C2    ACP        0.353  4
+ N1    ACP       -0.520  8
+ C6    ACP        0.353  1
+ N6    ACP       -0.520 10
+ C5    ACP        0.353  1
+ N7    ACP       -0.520  8
+ C8    ACP        0.353  4
+ O4'   ACP       -0.500 12
+ C4'   ACP        0.353  4
+ C3'   ACP        0.353  4
+ O3'   ACP       -0.500 12
+ C5'   ACP        0.353  3
+ O5'   ACP       -0.500 12
+ N1    LLP       -0.520  8         Niu, for GPB 
+ C6    LLP        0.210  4 
+ C5    LLP        0.210  1 
+ C5'   LLP        0.210  3
+ OP4   LLP       -0.500 12 
+ P     LLP        1.390 13
+ OP3   LLP       -0.500 11
+ OP2   LLP       -0.500 11
+ OP1   LLP       -0.500 12
+ C4    LLP        0.210  1
+ C4'   LLP        0.210  3
+ NZ    LLP       -0.520 10
+ CE    LLP        0.210  3
+ CD    LLP        0.210  3
+ CG    LLP        0.210  3
+ CB    LLP        0.210  3
+ CA    LLP        0.210  4
+ C     LLP        0.210  4 
+ O     LLP       -0.500 11 
+ N     LLP       -0.520 10
+ C3    LLP        0.210  1
+ O3    LLP       -0.500 12
+ C2    LLP        0.210  1
+ C2'   LLP        0.210  2
+ N     SAM       -0.520 10         Niu, for COMT
+ CA    SAM        0.210  4
+ CB    SAM        0.210  3
+ CG    SAM        0.410  3
+ SD    SAM        0.575 14 
+ C5'   SAM        0.410  3
+ C4'   SAM        0.210  4
+ C3'   SAM        0.210  4
+ C2'   SAM        0.210  4
+ C1'   SAM        0.210  4
+ N9    SAM       -0.520 10 
+ C4    SAM        0.210  1 
+ N3    SAM       -0.520  8
+ C2    SAM        0.210  4
+ N1    SAM       -0.520  8
+ C6    SAM        0.210  1
+ N6    SAM       -0.520 10 
+ C5    SAM        0.210  1
+ N7    SAM       -0.520  8
+ C8    SAM        0.210  4
+ O4'   SAM       -0.500 12
+ O2'   SAM       -0.500 12
+ O3'   SAM       -0.500 12
+ CE    SAM        0.410  3
+ C     SAM        0.210  1
+ OXT   SAM       -0.500 11 
+ O     SAM       -0.500 11
+ S     SO4        1.400 14         Niu for TK 
+ O2    SO4       -0.600 12
+ O1    SO4       -0.600 12
+ O3    SO4       -0.600 11
+ O4    SO4       -0.600 12
+ CHA   HEM        0.041  1         Heme group AM1-BCC summed to heavies (MMM)
+ CHB   HEM        0.053  1
+ CHC   HEM        0.066  1
+ CHD   HEM       -0.078  1
+ C1A   HEM        0.477  1
+ C2A   HEM       -0.163  1
+ C3A   HEM       -0.170  1
+ C4A   HEM        0.146  1
+ CMA   HEM        0.084  2
+ CAA   HEM        0.099  3
+ CBA   HEM       -0.110  3
+ CGA   HEM        0.895  1
+ O1A   HEM       -0.850 11
+ O2A   HEM       -0.850 11
+ C1B   HEM       -0.044  1
+ C2B   HEM       -0.116  1
+ C3B   HEM       -0.120  1
+ C4B   HEM       -0.060  1
+ CMB   HEM        0.097  2
+ CAB   HEM        0.050  1
+ CBB   HEM       -0.016  1
+ C1C   HEM        0.100  1
+ C2C   HEM       -0.122  1
+ C3C   HEM       -0.209  1
+ C4C   HEM        0.466  1
+ CMC   HEM        0.069  2
+ CAC   HEM        0.033  1
+ CBC   HEM       -0.024  1
+ C1D   HEM        0.126  1
+ C2D   HEM       -0.152  1
+ C3D   HEM       -0.046  1
+ C4D   HEM        0.105  1
+ CMD   HEM        0.108  2
+ CAD   HEM        0.110  3
+ CBD   HEM       -0.104  3
+ CGD   HEM        0.895  1
+ O1D   HEM       -0.849 11
+ O2D   HEM       -0.849 11
+ NA    HEM       -0.622  8
+ NB    HEM       -0.622  8
+ NC    HEM       -0.622  8
+ ND    HEM       -0.622  8
+ PA    FAD        1.621 13
+ O1A   FAD       -0.895 12
+ O2A   FAD       -0.895 12
+ O5B   FAD       -0.590 12
+ C5B   FAD        0.286  3
+ C4B   FAD        0.254  4
+ O4B   FAD       -0.425 12
+ C3B   FAD        0.241  4
+ O3B   FAD       -0.185 12
+ C2B   FAD        0.119  4
+ O2B   FAD       -0.213 12
+ C1B   FAD        0.513  4
+ N9A   FAD       -0.659  8
+ C8A   FAD        0.628  1
+ N7A   FAD       -0.570  8
+ C5A   FAD       -0.185  1
+ C6A   FAD        0.728  1
+ N6A   FAD       -0.084  8
+ N1A   FAD       -0.846  8
+ C2A   FAD        0.714  1
+ N3A   FAD       -0.700  8
+ C4A   FAD        0.564  1
+ N1    FAD       -0.748  8
+ C2    FAD        0.867  1
+ O2    FAD       -0.603 11
+ N3    FAD       -0.306  8
+ C4    FAD        0.638  1
+ O4    FAD       -0.608 11
+ C4X   FAD        0.212  1
+ N5    FAD       -0.420  8
+ C5X   FAD        0.034  1
+ C6    FAD        0.095  1
+ C7    FAD       -0.107  1
+ C7M   FAD        0.075  2
+ C8    FAD       -0.001  1
+ C8M   FAD        0.098  2
+ C9    FAD        0.042  1
+ C9A   FAD        0.173  1
+ N10   FAD       -0.509  8
+ C10   FAD        0.635  1
+ C1'   FAD        0.365  3
+ C2'   FAD        0.243  4
+ O2'   FAD       -0.177 12
+ C3'   FAD        0.161  4
+ O3'   FAD       -0.202 12
+ C4'   FAD        0.175  4
+ O4'   FAD       -0.146 12
+ C5'   FAD        0.209  3
+ O5'   FAD       -0.601 12
+ P     FAD        1.578 13
+ O1P   FAD       -0.913 12
+ O2P   FAD       -0.913 12
+ O3P   FAD       -0.767 12
+ PB    ADP        1.455 13
+ O1B   ADP       -0.675 12
+ O2B   ADP       -0.675 12
+ O3B   ADP       -0.675 12
+ PA    ADP        1.455 13
+ O1A   ADP       -0.872 12
+ O2A   ADP       -0.872 12
+ O3A   ADP       -0.736 12
+ O5'   ADP       -0.564 12
+ C5'   ADP        0.275  3
+ C4'   ADP        0.248  4
+ O4'   ADP       -0.352 12
+ C3'   ADP        0.216  4
+ O3'   ADP       -0.194 12
+ C2'   ADP        0.120  4
+ O2'   ADP       -0.239 12
+ C1'   ADP        0.499  4
+ N9    ADP       -0.651  8
+ C8    ADP        0.632  1
+ N7    ADP       -0.572  8
+ C5    ADP       -0.193  1
+ C6    ADP        0.729  1
+ N6    ADP       -0.086  8
+ N1    ADP       -0.859  8
+ C2    ADP        0.734  1
+ N3    ADP       -0.703  8
+ C4    ADP        0.555  1
+ N1    FMN       -0.768  8
+ C2    FMN        0.863  1
+ O2    FMN       -0.603 11
+ N3    FMN       -0.287  8
+ C4    FMN        0.639  1
+ O4    FMN       -0.605 11
+ C4A   FMN        0.164  1
+ N5    FMN       -0.410  8
+ C5A   FMN        0.020  1
+ C6    FMN        0.139  1
+ C7    FMN       -0.128  1
+ C7M   FMN        0.081  2
+ C8    FMN       -0.052  1
+ C8M   FMN        0.090  2
+ C9    FMN        0.021  1
+ C9A   FMN        0.139  1
+ N10   FMN       -0.500  8
+ C10   FMN        0.649  1
+ C1'   FMN        0.413  3
+ C2'   FMN        0.244  4
+ O2'   FMN       -0.174 12
+ C3'   FMN        0.168  4
+ O3'   FMN       -0.185 12
+ C4'   FMN        0.135  4
+ O4'   FMN       -0.235 12
+ C5'   FMN        0.104  3
+ O5'   FMN       -0.625 12
+ P     FMN        0.239 13
+ O1P   FMN       -0.512 12
+ O2P   FMN       -0.512 12
+ O3P   FMN       -0.512 12
+ N     TYS       -0.520  8   SULFOTYROSINE (Fudged from AM1-BCC calculation)
+ C     TYS        0.526  1   Charged -1
+ O     TYS       -0.500 11
+ HN    TYS        0.248  6
+ CA    TYS        0.184  5
+ CB    TYS        0.087  5
+ CG    TYS       -0.151  1
+ CD1   TYS        0.011  1
+ CD2   TYS        0.019  1
+ CE1   TYS       -0.009  1
+ CE2   TYS       -0.017  1
+ CZ    TYS        0.212  1
+ OH    TYS       -0.495 12
+ S     TYS        1.687 14
+ O1    TYS       -0.784 11
+ O2    TYS       -0.785 11
+ O3    TYS       -0.713 12

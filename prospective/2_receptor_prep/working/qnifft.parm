@@ -1,0 +1,128 @@
+!==================================
+! Example delphi default parameter file
+!==================================
+! SYNTAX: 
+! Keywords are case insensitive. ascii strings used for file names are
+! case sensitive
+! Everything after # or ! on a line is ignored as a comment.
+! Other lines contain 'phrases' of the form: keyword=value
+! with no spaces between  keyword, equal sign and value.
+! Phrases are delimited by one or more spaces or commas, or by the end of
+! a line- a phrase must therefore fit on one line. More than one phrase
+! may be placed on a line.  Each phrase contains a keyword, and a value.
+! The value is either a real number, integer, a logical (t or f) or
+! an ascii string containing no blanks or commas, depending on what type
+! of variable the keyword is.  Unparseable phrases, 
+! unrecognized keywords or invalid values types are ignored.
+! Repeated assignments of a value to the same keyword will overwrite
+! its value.  Delphi will first read this file, then try to read
+! a specific parameter file of indentical format which is 
+! named on the command line invoking the program. In this way
+! defaults may be overridden.  All parameters must be assigned, except
+! when they are made redundant by various options. Some of these
+! are indicated in the comments below by option A, option B etc.
+! Others should be obvious, i.e if no focussing is used, then an
+! input phimap filename is not needed.
+! Keywords may be abbreviated: the redundant letters are indicated
+! in the file delphi_parm.lis, which has an alphabetical listing of
+! parameters, and also output file by the letters after the 
+! asterisk in the keyword name.  For purposes of illustration this
+! file contains a default for every parameter. In actual usage you would
+! probably not have defaults for everything, especially file names, and
+! so would deleted the appropriate entries from this file
+!
+! grid and scaling parameters
+!
+gridsize=65              
+!
+!==================================
+! scaling options
+!==================================
+!
+!sizing=scale scale=1.   Xcenter=0.   Ycenter=0.       Zcenter=0.  !option A
+!sizing=fill  fill=66.                                             !option B
+!sizing=border border_solvent=10.                                  !option C
+!
+!==================================
+! boundary condition options
+!==================================
+!
+!boundary_condition=coulombic            !option A
+!boundary_condition=focussing            !option B
+!boundary_condition=zero                 !option C
+!boundary_condition=field                !option D
+boundary_condition=dipolar              !option E
+xperiodic=f               yperiodic=f            zperiodic=f
+!
+!==================================
+! solute parameters
+!==================================
+!
+solute_dielectric=2.     spherical_charge_dist=f         
+!
+!==================================
+! solvent parameters
+!==================================
+!
+solvent_dielectric=80.    salt_concentration=0.145
+probe_radius=1.4          ionic_radius=2.0
+ani_div=0.
+cat_div=0.
+ani_mon=0.145
+cat_mon=0.145
+
+!
+!==================================
+! algorithm parameters
+!==================================
+!
+temperature=298.
+fast_dielectric=f
+force_calculation=f
+nonlinear_equation=f        
+convergence=0.001 relaxation_parameter=1.0
+check_frequency=2         
+newton_iterations=20
+level0_multi_grid_it=2    level1_multi_grid_it=4
+level2_multi_grid_it=8    level3_multi_grid_it=16
+smooth_dielectric=0 
+!
+!==================================
+! output parameters
+!==================================
+!
+concentration_output=f         
+insight_format=f         
+site_potentials=f         
+atom_file_output=t         
+analyse_map=t
+title=untitled
+!
+!=============================
+! input files. Note input, output defaults are set up so that they would
+! read from the appropriate linked files in oldstyle delphi input method
+!=============================
+!
+radius_file=fort.11
+charge_file=fort.12
+!site_charge_file=fort.12
+pdb_input_file=fort.13
+phi_input_file=fort.18
+site_input_file=fort.15
+!
+!=============================
+! output files
+!=============================
+!
+pdb_output_file=qnifft.atm
+phi_output_file=qnifft.phi
+dielectric_map_file=qnifft.eps
+site_output_file=qnifft.fld
+input=f
+grid=193
+charge=amb.crg.oxt
+radius=vdw.siz
+pdb_input=receptor.crg.lowdielectric.pdb
+pdb_output_file=qnifft.atm
+phi_output_file=qnifft.electrostatics.phi
+sizing=border border_solvent=10.

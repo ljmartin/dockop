@@ -1,0 +1,41 @@
+                             FILTER PROGRAM
+
+           THIS PROGRAM FILTERS ATOMIC COORDINATE FILES
+             BASED ON DISTANCE AND SEQUENCE CRITERIA
+
+
+name of file to filter by -
+ xtal-lig.pdb                                                                    
+ filter by atom names or numbers in receptor(na/nu)?
+ residue/ligand orientation number increment filter?
+  -100000
+ Filter for MS run?(Y/N)
+ Y                                                                               
+ Either names or numbers of the atoms to filter by, as 
+ they appear in the pdb, with boolean and/or operators 
+ if such apply between them.  Maximum of one boolean 
+ per two filter atoms.
+ name of ligand file-
+ rec.pdb                                                                         
+ names of ligand atoms to match against receptor 
+ filters.  Include boolean and/ors between EACH 
+ atom specified.
+ LIGAND ATOM           1ISALL 
+ internal filtering?
+Y  
+ distance cutoffs for each of the receptor atoms         specified-
+    81.00000    
+ output filename-
+ rec.site                                                                        
+ number of allowed ligand contacts in an all-filter?
+ LIGBUM IS-           0
+ IR IS          26
+ Number of atoms in ligand -            0
+ IL IS        8431
+ NR IS-           1
+ INTERNAL BEGUN
+ INTERNAL COMPLETED
+           82
+ NUMLIG IS-          82
+ TOTAL NUMBER OF ORIENTATIONS WRITEN IS -          81
+ filtering complete
