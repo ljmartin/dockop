@@ -10,14 +10,14 @@ output_file_prefix            test.
 #                             MATCHING
 match_method                  2
 distance_tolerance            0.05
-match_goal                    10000
+match_goal                    4000
 distance_step                 0.05
 distance_maximum              0.5
 timeout                       5.0
 nodes_maximum                 4
 nodes_minimum                 4
-bump_maximum                  500.0
-bump_rigid                    500.0
+bump_maximum                  10.0
+bump_rigid                    10.0
 mol2_score_maximum            -50.0
 #####################################################
 #                             COLORING

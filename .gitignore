@@ -6,5 +6,10 @@
 *npy
 *hdf5
 *npz
-*~
 !processed_data/morgan.npz
+ipynb_checkpoints
+*db2.gz
+*.db
+*~
+*#
+*.csv

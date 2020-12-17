@@ -64,6 +64,16 @@ class Setup(object):
                      "useBondTypes": True,
                      "useFeatures": False,
             }
+        if self.fingerprint_kind=='morgan_feat':
+            function = rdMolDescriptors.GetMorganFingerprintAsBitVect
+            pars = { "radius": 2,
+                     "nBits": 65536,
+                     "invariants": [],
+                     "fromAtoms": [],
+                     "useChirality": False,
+                     "useBondTypes": True,
+                     "useFeatures": True,
+            }
         if self.fingerprint_kind=='atompair':
             function = rdMolDescriptors.GetHashedAtomPairFingerprintAsBitVect
             pars = { "nBits": 65536,

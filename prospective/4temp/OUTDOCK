@@ -1,0 +1,80 @@
+DOCK v. 3.7, compiled 20180413  
+DOCK compiled for bitsize 64,       
+DOCK subversion revision:           
+CPU, Date, and Time: lambo 20201217 151909.4
+ minimization is on
+Solvation type: context-dependent ligand desolvation
+Ligands will NOT be recombined (NO mix-n-match)
+Internal Distance Clashes checked
+Experimental premax scoring will NOT be used
+Clusters/Additional Match Spheres scoring will not be used
+No a* search, normal search used
+:dislim =  0.0500 maxnodes =    4 minnodes =    4
+ Matching method number             2  will be used
+:disstep =  0.0500 dismax =  0.5000 matchgoal =     4000
+ timeout =     5.000000    
+Receptor spheres: ../2_receptor_prep/dockfiles/matching_spheres.sph
+Input ligand: ZINC000328653016.db2.gz
+ DelPhi/Qnifft gridsize is            65
+ Receptor desolvation not being used
+vdW parms: ../2_receptor_prep/dockfiles/vdw.parms.amb.mindock
+ a maximum of   10.0 in vdw energy score is allowed for any flexible group
+ a maximum of   10.0 in vdw energy score is allowed for the whole rigid component
+ a maximum of   50.0 in total energy score is allowed for any pose written to mol2.
+ natmin =     4  natmax =    60
+ number of poses saved during processing   =     1
+ number of poses written    =     1
+ OUTDOCK will be updated every N numbers of lines, N =   100
+ hydrogens always written out
+ trilinear interpolation is always done
+ the receptor desolvation will be scaled by     0.000000    
+ gistvolume = 0.0 (defult) --> 
+ Gist-voxel volume will be calulated based on dxfile.
+min seed =       777
+ the ligand internal energy scaled by the factor     0.000000    
+ Receptor grids for Group#:             1
+Desolvation grid: ../2_receptor_prep/dockfiles/ligand.desolv.heavy
+Additional hydrogen desolvation grid: ../2_receptor_prep/dockfiles/ligand.desolv.hydrogen
+DelPhi grid: ../2_receptor_prep/dockfiles/trim.electrostatics.phi
+Rec Desolv is not being used
+ Gist grid not used. 0 or " " given.
+bumpmap filename: ../2_receptor_prep/dockfiles/vdw.bmp
+vdw filename: ../2_receptor_prep/dockfiles/vdw.vdw
+receptor energy:  0.0000
+ Only poses with a score better than    1.0000000E+07 
+  will be written to disk. Use with caution for retrospective calculations, 
+ Intended use is for prospective calculations. 
+ min grid limits:   -40.50000      -0.8889999        12.40700    
+ max grid limits:   -17.00000        28.11100        44.37653    
+ first set of grids read successfully
+   12 colors used in receptor sphere file
+Receptor spheres:   45
+ cluster    1 with   45 spheres
+ 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9012 9013 9014 9015
+ 9016 9017 9018 9019 9020 9021 9022 9023 9024 9025 9026 9027 9028 9029 9030
+ 9031 9032 9033 9034 9035 9036 9037 9038 9039 9040 9041 9042 9043 9044 9045
+ 
+output file: test.mol2.gz                                                                    
+ maximum receptor sphere-sphere distance    15.72164    
+  mol#           id_num     flexiblecode  matched    nscored    time hac    setnum    matnum   rank cloud    elect +  gist +   vdW + psol +  asol + inter + rec_e + rec_d + r_hyd =    Total
+     1 ZINC000328653016 1                    4460    1027047    0.64  25        69      1001      1     1    -2.56    0.00  -14.86   0.62   -0.28    0.00    0.00    0.00    0.00    -17.07
+     2 ZINC000328653016    4362      15386    0.20 No viable poses.  Grids might be too small.  
+     3 ZINC000328653016 1                    4341     615012    0.49  25        10       381      1     1    -4.61    0.00  -17.64   5.46   -2.48    0.00    0.00    0.00    0.00    -19.28
+     4 ZINC000328653016 1                    4460     926448    0.65  25        80      1641      1     1    -1.97    0.00  -18.17   1.44   -0.44    0.00    0.00    0.00    0.00    -19.14
+     5 ZINC000328653016    4512      12907    0.21 No viable poses.  Grids might be too small.  
+     6 ZINC000328653016 1                    4341     598938    0.50  25        33       669      1     1    -6.00    0.00  -19.19   6.40   -2.31    0.00    0.00    0.00    0.00    -21.11
+     7 ZINC000328653016 1                    4460    1509971    0.90  25         1      1726      1     1    -2.09    0.00  -18.19   2.87   -0.62    0.00    0.00    0.00    0.00    -18.04
+     8 ZINC000328653016    4691      22511    0.22 No viable poses.  Grids might be too small.  
+     9 ZINC000328653016 1                    4341     993922    0.66  25        72      3061      1     1    -1.53    0.00  -18.70   1.20   -2.42    0.00    0.00    0.00    0.00    -21.45
+ close the file: ZINC000328653016.db2.gz
+  we reached the end of the                                         split_database_index file
+ close SDIFILE
+ total minimization steps =           157
+ total number of hierarchies:             9
+ total number of orients (matches):         39968
+ total number of conformations (sets):          1173
+ total number of nodes (confs):          2862
+ total number of complexes:                   4552783
+ end of file encountered
+Date and Time: 20201217 151914.1
+elapsed time (sec):        4.7000  (hour):     0.0013

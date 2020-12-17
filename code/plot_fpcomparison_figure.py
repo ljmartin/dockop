@@ -15,7 +15,7 @@ true_scores = np.load('../processed_data/AmpC_short.npy')
 
 
 
-fps = ['morgan', 'atompair', 'topologicaltorsion', 'maccs', 'pattern', 'rdk']
+fps = ['morgan', 'morgan_feat', 'atompair', 'topologicaltorsion','pattern', 'rdk']
 
 results_df = pd.DataFrame(columns=['Fingerprint', 'Average Precision', 
                                    'low_ap', 'high_ap', 
@@ -54,7 +54,7 @@ for fp in fps:
         if fp=='maccs':
             x = [83,166]
         else:
-            x=  [64<<i for i in range(11)]
+            x=  [64<<i for i in range(1,11)]
         
         df = evaluate(x, fp)
     
