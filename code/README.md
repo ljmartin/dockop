@@ -35,9 +35,10 @@ from the virtual screening library:
 python parse_data.py ../data/table_name_smi_energy_hac_lte_25_title.csv 40000 ../processed_data/D4_sample_short
 ```
 
-these ligands can then be docked. Based on the evaluation of the random sample, we decide to sample X more ligands:
+these ligands can then be docked. Based on the evaluation of the random sample in `D4_subsample_analysis.ipynb`, we decide to sample 10,000,000 more ligands
+from the virtual screening library (this is about the limit for reasonable hard disk space on a single workstation):
 ```
-python parse_data.py ../data/table_name_smi_energy_hac_lte_25_title.csv X ../processed_data/D4_largesample
+python parse_data.py ../data/table_name_smi_energy_hac_lte_25_title.csv 10000000 ../processed_data/D4_largesample
 ```
 
 Then, we fingerprint the smiles codes for those ligands, rank them, and dock in order. 
