@@ -28,11 +28,11 @@ To perform the kNN analysis, just run `run_knn.py`. There are no options but see
 # Dopamine receptor type D4
 
 Having analyzed various fingerprints, folding sizes, algorithms, and training set sizes we
-are ready to simuilate a real docking campaign using the D4 receptor. Start by sampling ~40,000 ligands
+are ready to simuilate a real docking campaign using the D4 receptor. Start by sampling ~1000,000 ligands
 from the virtual screening library:
 
 ```
-python parse_data.py ../data/table_name_smi_energy_hac_lte_25_title.csv 40000 ../processed_data/D4_sample_short
+python parse_data.py ../data/table_name_smi_energy_hac_lte_25_title.csv 100000 ../processed_data/D4_smallsample
 ```
 
 these ligands can then be docked. Based on the evaluation of the random sample in `D4_subsample_analysis.ipynb`, we decide to sample 10,000,000 more ligands
