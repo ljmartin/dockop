@@ -21,6 +21,7 @@ results_df = pd.DataFrame(columns=['Fingerprint', 'Average Precision',
 
 
 SIZES = np.geomspace(300, 150000, 20).astype(int)
+SIZES = list(SIZES) + [280000, 400000] #had to add two more sizes to be consistent with the Coley paper. 
 
 def evaluate(x, fp):
     results_df = pd.DataFrame(columns=['Fingerprint', 'Average Precision', 
