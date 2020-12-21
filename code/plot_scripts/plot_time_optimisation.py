@@ -16,10 +16,10 @@ true_scores = np.load('../../processed_data/AmpC_short.npy')
 
 setup = Setup('morgan', '../../processed_data/AmpC', verbose=True)
 setup.load_scores()
-true_hit_rate = (setup.scores<-60).sum() / setup.scores.shape[0]
-num_true_hits = (setup.scores<-60).sum()
+true_hit_rate = (setup.scores<-62.16).sum() / setup.scores.shape[0]
+num_true_hits = (setup.scores<-62.16).sum()
 
-possible_sizes = np.geomspace(300, 150000, 20).astype(int)
+possible_sizes = list(np.geomspace(300, 150000, 20).astype(int)) + [280000, 400000]
 json_name = '../../processed_data/logreg_only.json'
 estimators = json.load(open(json_name, 'r'))['estimators']
 
@@ -106,9 +106,8 @@ df = pd.DataFrame(columns=['Computation days (single core)', 'low', 'high',
 
 count = 0
 
-sample_num_hits = (setup.scores<-60).sum()    
+sample_num_hits = (setup.scores<-62.16).sum()    
 sample_hit_rate = sample_num_hits / setup.scores.shape[0]
-training_set_sizes = np.geomspace(300, 150000, 20).astype(int)
 percentage = 0.5
 
 for desired_num_hits in np.linspace(10000,300000,11):
@@ -116,7 +115,7 @@ for desired_num_hits in np.linspace(10000,300000,11):
     n_hits_pulled = desired_num_hits / percentage
     n_ligands_to_pull = n_hits_pulled / sample_hit_rate 
     
-    for idx, size in enumerate(training_set_sizes):
+    for idx, size in enumerate(possible_sizes):
         num_already_found = np.mean([sample_num_hits - i.shape[0] for i in normalized_ranks_holder[idx]])
         
         num_remaining = n_hits_pulled - num_already_found

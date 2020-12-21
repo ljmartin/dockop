@@ -37,7 +37,7 @@ def evaluate(x, fp):
             proba = f[f'repeat{_}']['prediction'][:].copy()
             test_idx = f[f'repeat{_}']['test_idx'][:].copy()[~np.isinf(proba)]
             
-            aps.append(average_precision_score(true_scores[test_idx]<-60, 
+            aps.append(average_precision_score(true_scores[test_idx]<-62.16, 
                                                                  proba[~np.isinf(proba)]))
             
         mean = expit(np.mean(logit(aps)))
