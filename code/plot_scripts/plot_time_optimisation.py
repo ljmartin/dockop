@@ -16,8 +16,12 @@ true_scores = np.load('../../processed_data/AmpC_short.npy')
 
 setup = Setup('morgan', '../../processed_data/AmpC', verbose=True)
 setup.load_scores()
-true_hit_rate = (setup.scores<-62.16).sum() / setup.scores.shape[0]
-num_true_hits = (setup.scores<-62.16).sum()
+#true_hit_rate = (setup.scores<-62.16).sum() / setup.scores.shape[0]
+true_hit_rate = 0.01 # we enforce a 1th percentile goal.
+#num_true_hits = (setup.scores<-62.16).sum()
+num_true_hits = setup.scores * true_hit_rate
+
+CUTOFF = np.percentile(setup.scores, 1)
 
 possible_sizes = list(np.geomspace(300, 150000, 20).astype(int)) + [280000, 400000]
 json_name = '../../processed_data/logreg_only.json'
@@ -27,7 +31,7 @@ estimators = json.load(open(json_name, 'r'))['estimators']
 
 def load_results(trainingSetSize):
     """Just loads the hdf file from ../processed_data.
-    This scrip only uses morgan fingerprint and size 32768
+    This scrip only uses morgan fingerprint and size 8192
 
     It returns the normalized ranks - that is, rank all predictions in 
     terms of probability, and divide by the total number of items.
@@ -35,7 +39,7 @@ def load_results(trainingSetSize):
     This format helps to model with a StudentT distribution later."""
 
     fptype = 'morgan_feat'
-    fpSize = 32768
+    fpSize = 8192
     estimator_name = 'logreg0.1'
 
     f = h5py.File('../../processed_data/'+fptype+'_'+str(fpSize)+'_'+str(trainingSetSize)+'_'+estimator_name+'.hdf5', 'r')
@@ -44,7 +48,7 @@ def load_results(trainingSetSize):
         proba = f[f'repeat{_}']['prediction'][:].copy()
         ranked_predictions = (-proba[~np.isinf(proba)]).argsort().argsort()
         test_idx = f[f'repeat{_}']['test_idx'][:].copy()[~np.isinf(proba)]
-        normalized_ranks = (1+ranked_predictions[true_scores[test_idx]<-60]) / (len(test_idx)+1)
+        normalized_ranks = (1+ranked_predictions[true_scores[test_idx]<CUTOFF]) / (len(test_idx)+1)
         nranks.append(normalized_ranks)
     f.close()
     
@@ -91,9 +95,9 @@ for size in possible_sizes:
 
 #########
 ######Run through some simulations of a docking campaign. 
-######We ask the model to find a desired number of hits (score <-60).
+######We ask the model to find a desired number of hits 1th-percentile hits
 ######Assuming we know the hit rate in the dataset, we only
-######need to pull a set number of ligands from a virtual library.'
+######need to pull a set number of ligands from a virtual library.
 ######Then, we expect to find, say, 50% of those hits, leaving the
 ######other 50% undiscovered. Using these numbers, we can calculate
 ######how many ligands to pull, and based on a range of training set sizes
@@ -106,17 +110,17 @@ df = pd.DataFrame(columns=['Computation days (single core)', 'low', 'high',
 
 count = 0
 
-sample_num_hits = (setup.scores<-62.16).sum()    
-sample_hit_rate = sample_num_hits / setup.scores.shape[0]
+#sample_num_hits = (setup.scores<-62.16).sum()    
+#sample_hit_rate = sample_num_hits / setup.scores.shape[0]
 percentage = 0.5
 
 for desired_num_hits in np.linspace(10000,300000,11):
     
-    n_hits_pulled = desired_num_hits / percentage
-    n_ligands_to_pull = n_hits_pulled / sample_hit_rate 
+    n_hits_pulled = desired_num_hits / percentage # this is how many hits are in the whole dataset (50% of these will be undiscovered)
+    n_ligands_to_pull = n_hits_pulled / true_hit_rate # given a 1th percentile cut-off, we will need this many actual ligands in the library.
     
     for idx, size in enumerate(possible_sizes):
-        num_already_found = np.mean([sample_num_hits - i.shape[0] for i in normalized_ranks_holder[idx]])
+        num_already_found = np.mean([num_true_hits - i.shape[0] for i in normalized_ranks_holder[idx]])
         
         num_remaining = n_hits_pulled - num_already_found
         num_needed =  desired_num_hits-num_already_found
