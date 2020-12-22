@@ -11,7 +11,7 @@ class CommonEstimator(object):
     """ This class just provides a common interface for both classifiers and regressors.
     Makes things easier in the evaluation stage, I can just iterate through estimator:parameter 
     pairs from a JSON and it will work."""
-    def __init__(self, parameters, cutoff=-62.16, verbose=False):
+    def __init__(self, parameters, cutoff=1.0, verbose=False):
         """
         Instantiate this with a set of hyperparameters to get an sklearn estimator object 
         with fit and predict methods that will work for both classifiers and regressors.
@@ -48,10 +48,12 @@ class CommonEstimator(object):
         if self.verbose:
             start = time.time()
 
-            print(f'Fitting a {self.estimator.__class__.__name__} estimator, {X.shape} training set. {self.kwargs}')
+            cutoff = np.percentile(y, self.cutoff)
+            
+            print(f'Fitting a {self.estimator.__class__.__name__} estimator, {X.shape} training set. {self.kwargs}, cutoff: {cutoff}')
             
         if self.kind=='classifier':
-            self.estimator.fit(X, y<self.cutoff)
+            self.estimator.fit(X, y<cutoff)
         elif self.kind=='regressor':
             self.estimator.fit(X, y)
         else:
