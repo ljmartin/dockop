@@ -114,7 +114,7 @@ count = 0
 #sample_hit_rate = sample_num_hits / setup.scores.shape[0]
 percentage = 0.5
 
-for desired_num_hits in np.linspace(10000,300000,11):
+for desired_num_hits in [10_000,50_000, 100_000, 150_000, 200_000, 250_000, 300_000]:
     
     n_hits_pulled = desired_num_hits / percentage # this is how many hits are in the whole dataset (50% of these will be undiscovered)
     n_ligands_to_pull = n_hits_pulled / true_hit_rate # given a 1th percentile cut-off, we will need this many actual ligands in the library.
