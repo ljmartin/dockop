@@ -6,10 +6,13 @@
 *npy
 *hdf5
 *npz
+
 !processed_data/morgan.npz
 !morgan_feat_4096_15000_logreg0.1.hdf5
-!AmpC*ipynb
-!D4*ipynb
+!*_all_analysis.ipynb
+!*_all_figures.ipynb
+!*_all_generate_FPs.ipynb
+
 ipynb_checkpoints
 *db2.gz
 *.db
