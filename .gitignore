@@ -8,6 +8,8 @@
 *npz
 !processed_data/morgan.npz
 !morgan_feat_4096_15000_logreg0.1.hdf5
+!AmpC*ipynb
+!D4*ipynb
 ipynb_checkpoints
 *db2.gz
 *.db
