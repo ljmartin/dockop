@@ -19,14 +19,14 @@ for fpSize in sizes:
 
 lines = alt.Chart(df).mark_point(size=3).encode(
     x=alt.X('k', ),
-    y=alt.Y('Average Precision', ),
+    y=alt.Y('Average Precision', title='Average Precision'),
     color=alt.Color('Fingerprint Size:N',)# scale=alt.Scale(type='log',base=2, domain=(30,70000), zero=False)),
 #scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False)
 )
 
 hline = alt.Chart(df).mark_rule(size=1, strokeDash=[10, 10]).encode(
-    y=alt.Y('a:Q'),
+    y=alt.Y('a:Q', title='Average Precision'),
 )
 
-ch = (lines+hline).transform_calculate(a="0.013")
+ch = (lines+hline).transform_calculate(a="0.004")
 ch.save('../../figures/knn.html')

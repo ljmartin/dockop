@@ -16,7 +16,7 @@ true_scores = np.load('../../processed_data/AmpC_short.npy')
 
 
 fps = ['morgan', 'morgan_feat', 'atompair', 'topologicaltorsion','pattern', 'rdk']
-
+fps = ['morgan', 'morgan_feat', 'atompair']
 results_df = pd.DataFrame(columns=['Fingerprint', 'Average Precision', 
                                    'low_ap', 'high_ap', 
                                    'FPSize', 'Estimator'])
@@ -31,11 +31,11 @@ def evaluate(x, fp):
         f = h5py.File('../../processed_data/'+fp+'_'+str(size)+'_'+'15000_'+estimator_name+'.hdf5', 'r')
         nranks = list()
         aps= list()
-        for _ in range(5):
+        for _ in range(3):
             proba = f[f'repeat{_}']['prediction'][:].copy()
             test_idx = f[f'repeat{_}']['test_idx'][:].copy()[~np.isinf(proba)]
 
-            cutoff = np.percentile(true_scores[test_idx], 1)
+            cutoff = np.percentile(true_scores[test_idx], 0.4)
             
             aps.append(average_precision_score(true_scores[test_idx]<cutoff, 
                                                                  proba[~np.isinf(proba)]))
@@ -110,7 +110,7 @@ ch =alt.layer(
 
     data=results_df
 ).transform_calculate(
-    a="0.013",
+    a="0.004",#random clf average precision is equal to the rate of occurrence, 4th percentile or 0.004
     b=str(highest_ap)
 ).properties(width=350, height=250, ).facet(
     #'Fingerprint', columns=2
@@ -124,4 +124,4 @@ ch =alt.layer(
    #titleFontSize=15
 ).configure_header(titleFontSize=15,)
 
-ch.save('../../figures/fpsize_figure.html')
+ch.resolve_scale(x='independent').save('../../figures/fpsize_figure.html')
