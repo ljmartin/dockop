@@ -60,10 +60,11 @@ if __name__=="__main__":
     setup.load_fingerprints()
     setup.load_scores()
     setup.random_split(15000)
-    true = setup.scores[setup.test_idx]<-60
+
+    test_cutoff = np.percentile(setup.scores, 0.4)
+    true = setup.scores[setup.test_idx]<test_cutoff
     
-    #for fpSize in 256, 512, 1024, 2048, 4096, 8192:
-    for fpSize in 16384, 32768, 65536:
+    for fpSize in 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536:
         fp = setup.fold_to_size(fpSize)
 
         #parallelize kNN calculation
@@ -73,7 +74,8 @@ if __name__=="__main__":
         concat_fps = np.vstack(split_fps)
 
         #calculate predictions in terms of True or False
-        preds = setup.scores[setup.train_idx][concat_fps]<-60
+        train_cutoff = np.percentile(setup.scores[setup.train_idx], 0.4)
+        preds = setup.scores[setup.train_idx][concat_fps]<train_cutoff
 
         aps = list()
         for ncols in tqdm.tqdm(range(1,1201)):
