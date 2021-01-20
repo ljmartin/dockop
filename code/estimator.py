@@ -3,8 +3,10 @@ from sklearn.naive_bayes import BernoulliNB
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.svm import SVC, SVR, LinearSVC
 from sklearn.gaussian_process import GaussianProcessClassifier
+
 import time
 import numpy as np
+from scipy.special import logit
 
 
 class CommonEstimator(object):
@@ -48,7 +50,9 @@ class CommonEstimator(object):
         if self.verbose:
             start = time.time()
 
-            cutoff = np.percentile(y, self.cutoff)
+            
+            cutoff = np.percentile(y, self.cutoff) #estimate the percentile cutoff from the training set.
+            #(this is only necessary for classifiers, but printing it every iteration keeps me sane)
             
             print(f'Fitting a {self.estimator.__class__.__name__} estimator, {X.shape} training set. {self.kwargs}, cutoff: {cutoff}')
             
@@ -56,6 +60,10 @@ class CommonEstimator(object):
             self.estimator.fit(X, y<cutoff)
         elif self.kind=='regressor':
             self.estimator.fit(X, y)
+        elif self.kind=='logitrank_regressor':
+            ranks = y.argsort().argsort()+1 #most score negative becomes 1
+            logitranks = logit((ranks)/ (y.shape[0]+1)) #most negative score becomes most negative logitrank
+            self.estimator.fit(X, logitranks)
         else:
             raise ValueError('Got to set `kind` as either `classifier` or `regressor`')
         if self.verbose:
@@ -70,7 +78,7 @@ class CommonEstimator(object):
             except:
                 preds = self.estimator.decision_function(X) #like proba, higher is better!
             return preds
-        elif self.kind=='regressor':
+        elif self.kind in ['regressor', 'logitrank_regressor']:
             preds = -1 * self.estimator.predict(X) # we want the most negative scores to be the most positive predictions
             return preds
         else:
