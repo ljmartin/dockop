@@ -1,11 +1,15 @@
 import sys
 from set_up import Setup
 from estimator import CommonEstimator
-
 import json
 import h5py
-
 from utils import get_memory_usage
+
+import numpy as np
+SEED = 12939 #from random.org
+np.random.seed(SEED)
+
+
 
 print('python main.py fpType fpSize estimators.json dataset')
 
@@ -36,11 +40,10 @@ if __name__=='__main__':
     
     #evaluation stuff goes here:    
     for estimator in estimators:
-
-        for repeat in range(3): #used to do five but the error bars were tiny! No need for that extra time taken to get the answer
+        for repeat in range(5):
             setup.random_split(trainingSetSize)
                 
-            common_estimator = CommonEstimator(estimator, cutoff=0.4, verbose=setup.verbose)
+            common_estimator = CommonEstimator(estimator, cutoff=0.8, verbose=setup.verbose)
             print(setup.train_idx.shape)
             print(setup.scores.shape)
             common_estimator.fit(feature_matrix[setup.train_idx], setup.scores[setup.train_idx])

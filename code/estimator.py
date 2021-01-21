@@ -1,4 +1,4 @@
-from sklearn.linear_model import LogisticRegression, LinearRegression, Ridge, SGDClassifier, ElasticNet, Lasso
+from sklearn.linear_model import LogisticRegression, LinearRegression, Ridge
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.svm import SVC, SVR, LinearSVC
@@ -60,12 +60,12 @@ class CommonEstimator(object):
             self.estimator.fit(X, y<cutoff)
         elif self.kind=='regressor':
             self.estimator.fit(X, y)
-        elif self.kind=='logitrank_regressor':
-            ranks = y.argsort().argsort()+1 #most score negative becomes 1
-            logitranks = logit((ranks)/ (y.shape[0]+1)) #most negative score becomes most negative logitrank
-            self.estimator.fit(X, logitranks)
+        elif self.kind=='rank_regressor':
+            ranks = y.argsort().argsort()+1 #most negative score becomes 1
+            #logitranks = logit((ranks)/ (y.shape[0]+1)) #most negative score becomes most negative logitrank
+            self.estimator.fit(X, ranks)
         else:
-            raise ValueError('Got to set `kind` as either `classifier` or `regressor`')
+            raise ValueError('Got to set `kind` as either `classifier` or `regressor`, or `rank_regressor`')
         if self.verbose:
             end = time.time()
             print('Time:', end - start)
@@ -78,7 +78,7 @@ class CommonEstimator(object):
             except:
                 preds = self.estimator.decision_function(X) #like proba, higher is better!
             return preds
-        elif self.kind in ['regressor', 'logitrank_regressor']:
+        elif self.kind in ['regressor', 'rank_regressor']:
             preds = -1 * self.estimator.predict(X) # we want the most negative scores to be the most positive predictions
             return preds
         else:

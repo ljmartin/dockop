@@ -16,7 +16,7 @@ true_scores = np.load('../../processed_data/AmpC_short.npy')
 
 
 fps = ['morgan', 'morgan_feat', 'atompair', 'topologicaltorsion','pattern', 'rdk']
-fps = ['morgan', 'morgan_feat', 'atompair']
+
 results_df = pd.DataFrame(columns=['Fingerprint', 'Average Precision', 
                                    'low_ap', 'high_ap', 
                                    'FPSize', 'Estimator'])
@@ -31,7 +31,7 @@ def evaluate(x, fp):
         f = h5py.File('../../processed_data/'+fp+'_'+str(size)+'_'+'15000_'+estimator_name+'.hdf5', 'r')
         nranks = list()
         aps= list()
-        for _ in range(3):
+        for _ in range(5):
             proba = f[f'repeat{_}']['prediction'][:].copy()
             test_idx = f[f'repeat{_}']['test_idx'][:].copy()[~np.isinf(proba)]
 

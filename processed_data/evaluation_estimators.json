@@ -58,12 +58,6 @@
    "kind": "regressor",
    "kwargs": {},
    "name": "ridge"
-  },
-  {
-   "estimator": "Ridge",
-   "kind": "logitrank_regressor",
-   "kwargs": {},
-   "name": "logitrank_ridge"
   }
  ]
 }
