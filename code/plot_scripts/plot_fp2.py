@@ -16,7 +16,7 @@ true_scores = np.load('../../processed_data/AmpC_short.npy')
 
 
 fps = ['morgan', 'morgan_feat', 'atompair', 'topologicaltorsion','pattern', 'rdk']
-fps = ['morgan', 'morgan_feat']
+
 
 results_df = pd.DataFrame(columns=['Fingerprint', 'Average Precision', 
                                    'FPSize', 'Estimator'])
@@ -34,7 +34,7 @@ def evaluate(x, fp):
             proba = f[f'repeat{_}']['prediction'][:].copy()
             test_idx = f[f'repeat{_}']['test_idx'][:].copy()[~np.isinf(proba)]
 
-            cutoff = np.percentile(true_scores[test_idx], 0.05)
+            cutoff = np.percentile(true_scores[test_idx], 0.4)
             
             ap = average_precision_score(true_scores[test_idx]<cutoff, 
                                                                  proba[~np.isinf(proba)])
@@ -47,8 +47,6 @@ def evaluate(x, fp):
 
 for fp in fps:
     for estimator in estimators:
-        if estimator['name']=='linreg':
-            continue
         print(fp, estimator['name'])
         estimator_name = estimator['name']
 
@@ -66,8 +64,8 @@ for fp in fps:
 
 low = 32
 high = 70000 #65536
-
-highest_ap = df.groupby(['Fingerprint', 'FPSize', 'Estimator']).mean('Average Precision').max()['Average Precision']
+results_df.to_csv('temp.csv')
+highest_ap = results_df.groupby(['Fingerprint', 'FPSize', 'Estimator']).mean('Average Precision').max()['Average Precision']
 #highest_ap = results_df['Average Precision'].max()
 
 # generate the error bars

@@ -12,7 +12,8 @@ df2 = pd.read_csv('../../processed_data/AmpC_single_0.4.csv')
 df2['Dataset'] = 'AmpC'
 
 
-df = pd.concat([df1, df2])
+#df = pd.concat([df1, df2])
+df = pd.concat([df2])
 df['gain'] = df['N hits wanted']/0.004 / df['N hits explored']
 df['Days'] = df['N hits explored'] / 60 / 60 /24
 
