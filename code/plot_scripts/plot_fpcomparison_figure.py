@@ -17,18 +17,17 @@ true_scores = np.load('../../processed_data/AmpC_short.npy')
 
 fps = ['morgan', 'morgan_feat', 'atompair', 'topologicaltorsion','pattern', 'rdk']
 
+
 results_df = pd.DataFrame(columns=['Fingerprint', 'Average Precision', 
-                                   'low_ap', 'high_ap', 
                                    'FPSize', 'Estimator'])
 
 
 def evaluate(x, fp):
-    results_df = pd.DataFrame(columns=['Fingerprint', 'Average Precision', 
-                                       'low_ap', 'high_ap',
+    results_df = pd.DataFrame(columns=['Fingerprint', 'Average Precision',
                                        'FPSize','Estimator'])
     count=0
     for size in x:
-        f = h5py.File('../../processed_data/'+fp+'_'+str(size)+'_'+'15000_'+estimator_name+'.hdf5', 'r')
+        f = h5py.File('../../processed_data/'+fp+'_'+str(size)+'_'+'25000_'+estimator_name+'.hdf5', 'r')
         nranks = list()
         aps= list()
         for _ in range(5):
@@ -37,15 +36,13 @@ def evaluate(x, fp):
 
             cutoff = np.percentile(true_scores[test_idx], 0.4)
             
-            aps.append(average_precision_score(true_scores[test_idx]<cutoff, 
-                                                                 proba[~np.isinf(proba)]))
+            ap = average_precision_score(true_scores[test_idx]<cutoff, 
+                                                                 proba[~np.isinf(proba)])
+            results_df.loc[count] = [fp, ap, size, estimator_name]
+            count+=1
             
-        mean = expit(np.mean(logit(aps)))
-        cr = bayes_mvs(logit(aps))[0][1]
         f.close()
         
-        results_df.loc[count] = [fp, mean, expit(cr[0]), expit(cr[1]), size, estimator_name]
-        count+=1
     return results_df
 
 for fp in fps:
@@ -67,28 +64,28 @@ for fp in fps:
 
 low = 32
 high = 70000 #65536
-
-highest_ap = results_df['Average Precision'].max()
+results_df.to_csv('temp.csv')
+highest_ap = results_df.groupby(['Fingerprint', 'FPSize', 'Estimator']).mean('Average Precision').max()['Average Precision']
+#highest_ap = results_df['Average Precision'].max()
 
 # generate the error bars
-errorbars = alt.Chart().mark_errorbar().encode(
+errorbars = alt.Chart().mark_errorbar(extent='ci').encode(
     x=alt.X('FPSize', scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False),
            axis=alt.Axis(labelAngle=60)),
-    y=alt.Y("low_ap:Q", title='Average Precision'),
-    y2="high_ap:Q",
+    y=alt.Y("Average Precision", title='Average Precision'),
     color=alt.Color('Estimator')
 )
 
 lines = alt.Chart().mark_line(size=3).encode(
     x=alt.X('FPSize', scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False)),
-    y=alt.Y('Average Precision', ),
+    y=alt.Y('Average Precision', aggregate='mean'),
     color=alt.Color('Estimator'),
     
 )
 
 points = alt.Chart().mark_point(size=60, filled=True).encode(
     x=alt.X('FPSize', scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False)),
-    y=alt.Y('Average Precision', ),
+    y=alt.Y('Average Precision', aggregate='mean'),
     color=alt.Color('Estimator'),
     
 )

@@ -36,8 +36,10 @@ def evaluate(x, fp):
         for _ in range(5):
             proba = f[f'repeat{_}']['prediction'][:].copy()
             test_idx = f[f'repeat{_}']['test_idx'][:].copy()[~np.isinf(proba)]
+
+            cutoff = np.percentile(true_scores[test_idx], 0.4)
             
-            aps.append(average_precision_score(true_scores[test_idx]<-62.16, 
+            aps.append(average_precision_score(true_scores[test_idx]<cutoff, 
                                                                  proba[~np.isinf(proba)]))
             
         mean = expit(np.mean(logit(aps)))
@@ -93,7 +95,7 @@ ch= alt.layer(
 #    hline,
     data=results_df
 ).transform_calculate(
-    a="0.013"
+    a="0.004"
 ).properties(width=350, height=250, ).facet(
     #'Fingerprint', columns=2
     facet=alt.Facet('Fingerprint',header=alt.Header(labelFontSize=15),),
