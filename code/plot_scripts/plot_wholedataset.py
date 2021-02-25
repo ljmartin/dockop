@@ -50,8 +50,8 @@ error_bars = alt.Chart(df).mark_errorbar(extent='stdev').encode(
 
 
 ch = (line+pts+error_bars).properties(width=300, height=250).facet('Dataset:N')
-#ch.resolve_scale(y='independent').save('../../figures/single_it_enrichment.html')
-ch.save('../../figures/single_it_enrichment.html')
+ch.resolve_scale(y='independent').save('../../figures/single_it_enrichment.html')
+#ch.save('../../figures/single_it_enrichment.html')
 
 
 
@@ -78,8 +78,9 @@ error_bars = alt.Chart(df).mark_errorbar(extent='ci').encode(
 ch = line+pts+error_bars
 ch = ch.properties(width=300, height=250).facet('Dataset:N',)
 
-#ch.resolve_scale(y='independent').save('../../figures/single_it_computationdays.html')
-ch.save('../../figures/single_it_computationdays.html')
+
+ch.resolve_scale(y='independent').save('../../figures/single_it_computationdays.html')
+#ch.save('../../figures/single_it_computationdays.html')
 
 #####
 ##Active learning approach:
