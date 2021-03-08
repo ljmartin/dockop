@@ -85,13 +85,13 @@ ch.resolve_scale(y='independent').save('../../figures/single_it_computationdays.
 #####
 ##Active learning approach:
 #####
-df1 = pd.read_csv('../../processed_data/ampc_reconstruction_0.125.csv')
+df1 = pd.read_csv('../../processed_data/ampc_reconstruction_0.15.csv')
 df1['Algorithm'] = 'AmpC:LogReg (ours)'
 df2 = pd.read_csv('../../processed_data/D4_reconstruction_0.15.csv')
 df2['Algorithm'] = 'D4:LogReg (ours)'
 
 df = pd.concat([df1, df2])
-df = pd.read_csv('../../processed_data/ampc_reconstruction_0.125.csv')
+df = pd.read_csv('../../processed_data/ampc_reconstruction_0.15.csv')
 
 prev_results = [['AmpC:RF (Graff)', 400_000, 71.4, 2.1], ['AmpC:NN (Graff)', 400_000, 74.7, 1.4],
                 ['AmpC:MPN (Graff)',400_000, 87.9, 2.3],
