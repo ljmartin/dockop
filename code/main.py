@@ -43,7 +43,7 @@ if __name__=='__main__':
         for repeat in range(5):
             setup.random_split(trainingSetSize)
             
-            common_estimator = CommonEstimator(estimator, cutoff=0.8, verbose=setup.verbose)
+            common_estimator = CommonEstimator(estimator, cutoff=0.3, verbose=setup.verbose)
             print(setup.train_idx.shape)
             print(setup.scores.shape)
             common_estimator.fit(feature_matrix[setup.train_idx], setup.scores[setup.train_idx])

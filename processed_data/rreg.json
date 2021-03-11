@@ -1,0 +1,10 @@
+{
+ "estimators": [
+     {
+   "estimator": "Ridge",
+   "kind": "rank_regressor",
+	 "kwargs": {},
+   "name": "rr_ridge"
+     }
+ ]
+}

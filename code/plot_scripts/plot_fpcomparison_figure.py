@@ -1,13 +1,14 @@
 import altair as alt
 from scipy.stats import bayes_mvs
 from sklearn.metrics import average_precision_score
+from scipy.stats import weightedtau
 import h5py
 from scipy.special import logit, expit
 import pandas as pd
 import numpy as np
 
 import json
-json_name = '../../processed_data/evaluation_estimators.json'
+json_name = '../../processed_data/evaluation_estimators_clf.json'
 estimators = json.load(open(json_name, 'r'))['estimators']
 
 true_scores = np.load('../../processed_data/AmpC_short.npy')
@@ -27,17 +28,18 @@ def evaluate(x, fp):
                                        'FPSize','Estimator'])
     count=0
     for size in x:
-        f = h5py.File('../../processed_data/'+fp+'_'+str(size)+'_'+'25000_'+estimator_name+'.hdf5', 'r')
+        f = h5py.File('../../processed_data/'+fp+'_'+str(size)+'_'+'50000_'+estimator_name+'.hdf5', 'r')
         nranks = list()
         aps= list()
         for _ in range(5):
             proba = f[f'repeat{_}']['prediction'][:].copy()
             test_idx = f[f'repeat{_}']['test_idx'][:].copy()[~np.isinf(proba)]
 
-            cutoff = np.percentile(true_scores[test_idx], 0.4)
-            
+            cutoff = np.percentile(true_scores[test_idx], 0.3)
+
             ap = average_precision_score(true_scores[test_idx]<cutoff, 
-                                                                 proba[~np.isinf(proba)])
+                                         proba[~np.isinf(proba)])
+            print(ap)
             results_df.loc[count] = [fp, ap, size, estimator_name]
             count+=1
             
@@ -107,7 +109,7 @@ ch =alt.layer(
 
     data=results_df
 ).transform_calculate(
-    a="0.004",#random clf average precision is equal to the rate of occurrence, 4th percentile or 0.004
+    a="0.0015",#random clf average precision is equal to the rate of occurrence, 3th percentile or 0.003
     b=str(highest_ap)
 ).properties(width=350, height=250, ).facet(
     #'Fingerprint', columns=2

@@ -1,8 +1,11 @@
-from sklearn.linear_model import LogisticRegression, LinearRegression, Ridge
+from sklearn.linear_model import LogisticRegression, LinearRegression, Ridge, SGDRegressor
 from sklearn.naive_bayes import BernoulliNB
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingRegressor
 from sklearn.svm import SVC, SVR, LinearSVC
 from sklearn.gaussian_process import GaussianProcessClassifier
+
+from sklearn.ensemble import RandomForestRegressor
 
 import time
 import numpy as np
@@ -27,7 +30,8 @@ class CommonEstimator(object):
             - 'kwargs': dict. hyperparameters for a sklearn estimator. 
             - 'estimator': str. the name of an sklearn estimator, i.e.
                 `LogisticRegression` or `LinearRegression`.
-            - 'kind': str. one of `classifier` or `regressor`
+            - 'kind': str. one of `classifier` or `regressor
+            - 'cutoff': percentile (out of 100) cutoff for classifiers`
         """
         self.cutoff = cutoff
         #these are the hyperparameters:
@@ -52,8 +56,8 @@ class CommonEstimator(object):
 
             
             cutoff = np.percentile(y, self.cutoff) #estimate the percentile cutoff from the training set.
+
             #(this is only necessary for classifiers, but printing it every iteration keeps me sane)
-            
             print(f'Fitting a {self.estimator.__class__.__name__} estimator, {X.shape} training set. {self.kwargs}, cutoff: {cutoff}')
             
         if self.kind=='classifier':
@@ -62,8 +66,9 @@ class CommonEstimator(object):
             self.estimator.fit(X, y)
         elif self.kind=='rank_regressor':
             ranks = y.argsort().argsort()+1 #most negative score becomes 1
-            #logitranks = logit((ranks)/ (y.shape[0]+1)) #most negative score becomes most negative logitrank
-            self.estimator.fit(X, ranks)
+            logranks = np.log10(ranks)
+            #logitranks = logit((ranks)/ (y.shape[0])) #most negative score becomes most negative logitrank
+            self.estimator.fit(X, logranks)
         else:
             raise ValueError('Got to set `kind` as either `classifier` or `regressor`, or `rank_regressor`')
         if self.verbose:
