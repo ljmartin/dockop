@@ -15,6 +15,7 @@
 !*_all_iterative.ipynb
 !*_all_single.ipynb
 !bayesian_hit_rate_fit.ipynb
+!empirical_hit_rate_fit.ipynb
 
 ipynb_checkpoints
 *db2.gz
