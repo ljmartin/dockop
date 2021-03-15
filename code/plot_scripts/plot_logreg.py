@@ -35,7 +35,7 @@ def evaluate(x, fp):
             proba = f[f'repeat{_}']['prediction'][:].copy()
             test_idx = f[f'repeat{_}']['test_idx'][:].copy()[~np.isinf(proba)]
 
-            cutoff = np.percentile(true_scores[test_idx], 0.15)
+            cutoff = np.percentile(true_scores[test_idx], 0.3)
 
             ap = average_precision_score(true_scores[test_idx]<cutoff, 
                                          proba[~np.isinf(proba)])
@@ -66,7 +66,7 @@ for fp in fps:
 
 
 
-low = 32
+low = 64
 high = 70000 #65536
 results_df.to_csv('temp.csv')
 highest_ap = results_df.groupby(['Fingerprint', 'FPSize', 'Estimator']).mean('Average Precision').max()['Average Precision']
@@ -75,20 +75,23 @@ highest_ap = results_df.groupby(['Fingerprint', 'FPSize', 'Estimator']).mean('Av
 # generate the error bars
 errorbars = alt.Chart().mark_errorbar(extent='ci').encode(
     x=alt.X('FPSize', scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False),
-           axis=alt.Axis(labelAngle=60)),
+            axis=alt.Axis(labelAngle=60),
+            title = 'Fingerprint Size'),
     y=alt.Y("Average Precision", title='Average Precision'),
     color=alt.Color('Fingerprint')
 )
 
 lines = alt.Chart().mark_line(size=3).encode(
-    x=alt.X('FPSize', scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False)),
+    x=alt.X('FPSize', scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False),
+            title = 'Fingerprint Size'),
     y=alt.Y('Average Precision', aggregate='mean'),
     color=alt.Color('Fingerprint'),
     
 )
 
 points = alt.Chart().mark_point(size=60, filled=True).encode(
-    x=alt.X('FPSize', scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False)),
+    x=alt.X('FPSize', scale=alt.Scale(type='log',base=2, domain=(low,high), zero=False),
+            title = 'Fingerprint Size'),
     y=alt.Y('Average Precision', aggregate='mean'),
     color=alt.Color('Fingerprint'),
     
@@ -109,13 +112,13 @@ ch =alt.layer(
     errorbars, 
     lines,
     points, 
-    data=results_df
-).transform_calculate(
-    a="0.0015",#random clf average precision is equal to the rate of occurrence, 3th percentile or 0.003
-    b=str(highest_ap)
-).properties(width=450, height=250, ).configure_axis(
-   #labelFontSize=10,
-   #titleFontSize=15
-).configure_header(titleFontSize=15,)
+    data=results_df).transform_calculate(
+        a="0.003",#random clf average precision is equal to the rate of occurrence, 3th percentile or 0.003
+        b=str(highest_ap)
+    ).properties(
+        width=400,
+        height=250, ).configure_header(
+                titleFontSize=15,
+            )
 
 ch.resolve_scale().save('../../figures/fpsize_logreg.html')

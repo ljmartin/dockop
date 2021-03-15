@@ -5,16 +5,16 @@ import numpy as np
 
 
 
-df1 = pd.read_csv('../../processed_data/D4_single_0.4.csv')
+df1 = pd.read_csv('../../processed_data/D4_single_0.3.csv')
 df1['Dataset'] = 'D4'
 
-df2 = pd.read_csv('../../processed_data/AmpC_single_0.4.csv')
+df2 = pd.read_csv('../../processed_data/AmpC_single_0.3.csv')
 df2['Dataset'] = 'AmpC'
 
 
 df = pd.concat([df1, df2])
 
-df['gain'] = df['N hits wanted']/0.004 / df['N hits explored']
+df['gain'] = df['N hits wanted']/0.003 / df['N hits explored']
 df['Days'] = df['N hits explored'] / 60 / 60 /24
 
 
@@ -39,10 +39,10 @@ pts = alt.Chart(df).mark_point(filled=False,size=40).encode(
   x=alt.X('Training set size:Q'),
   y=alt.Y('gain',aggregate='mean',title='Enrichment'),
     color=alt.Color('N hits wanted:N'),
-    tooltip=alt.Tooltip('gain', aggregate='mean', title='Enrichment')
+    tooltip=alt.Tooltip('N hits wanted', aggregate='mean', title='Enrichment')
 )
 
-error_bars = alt.Chart(df).mark_errorbar(extent='stdev').encode(
+error_bars = alt.Chart(df).mark_errorbar(extent='ci').encode(
   x=alt.X('Training set size:Q',),
   y=alt.Y('gain', title='Enrichment'),
     color=alt.Color('N hits wanted:N')
@@ -66,7 +66,7 @@ pts = alt.Chart(df).mark_point(filled=False,size=40).encode(
   x=alt.X('Training set size:Q'),
   y=alt.Y('Computation days (single cpu)',aggregate='mean',),
     color=alt.Color('N hits wanted:N'),
-    tooltip=alt.Tooltip('Computation days (single cpu)')
+#    tooltip=alt.Tooltip('Computation days (single cpu)')
 )
 
 error_bars = alt.Chart(df).mark_errorbar(extent='ci').encode(
@@ -85,13 +85,12 @@ ch.resolve_scale(y='independent').save('../../figures/single_it_computationdays.
 #####
 ##Active learning approach:
 #####
-df1 = pd.read_csv('../../processed_data/ampc_reconstruction_0.15.csv')
+df1 = pd.read_csv('../../processed_data/ampc_reconstruction_0.3_1_.csv')
 df1['Algorithm'] = 'AmpC:LogReg (ours)'
-df2 = pd.read_csv('../../processed_data/D4_reconstruction_0.15.csv')
+df2 = pd.read_csv('../../processed_data/D4_reconstruction_0.3_1_.csv')
 df2['Algorithm'] = 'D4:LogReg (ours)'
 
 df = pd.concat([df1, df2])
-df = pd.read_csv('../../processed_data/ampc_reconstruction_0.15.csv')
 
 prev_results = [['AmpC:RF (Graff)', 400_000, 71.4, 2.1], ['AmpC:NN (Graff)', 400_000, 74.7, 1.4],
                 ['AmpC:MPN (Graff)',400_000, 87.9, 2.3],

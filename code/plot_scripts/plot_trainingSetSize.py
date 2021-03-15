@@ -30,14 +30,14 @@ def evaluate(x, fp):
                                        'Training Set Size','Estimator'])
     count=0
     for size in x:
-        f = h5py.File('../../processed_data/'+fp+'_'+str(32768)+'_'+str(size)+'_'+estimator_name+'.hdf5', 'r')
+        f = h5py.File('../../processed_data/'+fp+'_'+str(8192)+'_'+str(size)+'_'+estimator_name+'.hdf5', 'r')
         nranks = list()
         aps= list()
         for _ in range(5):
             proba = f[f'repeat{_}']['prediction'][:].copy()
             test_idx = f[f'repeat{_}']['test_idx'][:].copy()[~np.isinf(proba)]
 
-            cutoff = np.percentile(true_scores[test_idx], 0.4)
+            cutoff = np.percentile(true_scores[test_idx], 0.3)
             
             aps.append(average_precision_score(true_scores[test_idx]<cutoff, 
                                                                  proba[~np.isinf(proba)]))
@@ -95,7 +95,7 @@ ch= alt.layer(
 #    hline,
     data=results_df
 ).transform_calculate(
-    a="0.004"
+    a="0.003"
 ).properties(width=350, height=250, ).facet(
     #'Fingerprint', columns=2
     facet=alt.Facet('Fingerprint',header=alt.Header(labelFontSize=15),),
