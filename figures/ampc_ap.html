@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.8.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "layer": [{"mark": "line", "encoding": {"x": {"type": "quantitative", "field": "Training size"}, "y": {"type": "quantitative", "aggregate": "mean", "field": "Average Precision"}}}, {"mark": {"type": "errorbar", "extent": "ci"}, "encoding": {"x": {"type": "quantitative", "field": "Training size"}, "y": {"type": "quantitative", "field": "Average Precision"}}}, {"mark": "point", "encoding": {"x": {"type": "quantitative", "field": "Training size"}, "y": {"type": "quantitative", "aggregate": "mean", "field": "Average Precision"}}}], "data": {"name": "data-a7d3aeb45bb96bbd767e4e7ad68e0bd7"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json", "datasets": {"data-a7d3aeb45bb96bbd767e4e7ad68e0bd7": [{"Unnamed: 0": 0, "Training size": 10000.0, "Average Precision": 0.10181590359882252}, {"Unnamed: 0": 1, "Training size": 14303.0, "Average Precision": 0.11159981598012332}, {"Unnamed: 0": 2, "Training size": 20458.0, "Average Precision": 0.11420977932220915}, {"Unnamed: 0": 3, "Training size": 29262.0, "Average Precision": 0.11881064707802808}, {"Unnamed: 0": 4, "Training size": 41854.0, "Average Precision": 0.1233246389456166}, {"Unnamed: 0": 5, "Training size": 59865.0, "Average Precision": 0.1300261838277193}, {"Unnamed: 0": 6, "Training size": 85626.0, "Average Precision": 0.13325689424301526}, {"Unnamed: 0": 7, "Training size": 122474.0, "Average Precision": 0.14640575347130433}, {"Unnamed: 0": 8, "Training size": 175178.0, "Average Precision": 0.15403028513205114}, {"Unnamed: 0": 9, "Training size": 250562.0, "Average Precision": 0.16825471402296013}, {"Unnamed: 0": 10, "Training size": 358385.0, "Average Precision": 0.1824471093801892}, {"Unnamed: 0": 11, "Training size": 512608.0, "Average Precision": 0.19508451157280565}, {"Unnamed: 0": 12, "Training size": 733197.0, "Average Precision": 0.20931413476852967}, {"Unnamed: 0": 13, "Training size": 1048711.0, "Average Precision": 0.21875218115487216}, {"Unnamed: 0": 14, "Training size": 1500000.0, "Average Precision": 0.22826384544889936}, {"Unnamed: 0": 15, "Training size": 10000.0, "Average Precision": 0.08884143523669621}, {"Unnamed: 0": 16, "Training size": 14303.0, "Average Precision": 0.09802611083274107}, {"Unnamed: 0": 17, "Training size": 20458.0, "Average Precision": 0.09985877680550392}, {"Unnamed: 0": 18, "Training size": 29262.0, "Average Precision": 0.1122302361381738}, {"Unnamed: 0": 19, "Training size": 41854.0, "Average Precision": 0.12158618058562436}, {"Unnamed: 0": 20, "Training size": 59865.0, "Average Precision": 0.12804916077882048}, {"Unnamed: 0": 21, "Training size": 85626.0, "Average Precision": 0.14137434747934582}, {"Unnamed: 0": 22, "Training size": 122474.0, "Average Precision": 0.14640302665166624}, {"Unnamed: 0": 23, "Training size": 175178.0, "Average Precision": 0.15699098638677986}, {"Unnamed: 0": 24, "Training size": 250562.0, "Average Precision": 0.1729143555319428}, {"Unnamed: 0": 25, "Training size": 358385.0, "Average Precision": 0.18685556747336385}, {"Unnamed: 0": 26, "Training size": 512608.0, "Average Precision": 0.19748823928208734}, {"Unnamed: 0": 27, "Training size": 733197.0, "Average Precision": 0.2073554175210925}, {"Unnamed: 0": 28, "Training size": 1048711.0, "Average Precision": 0.21764755305507366}, {"Unnamed: 0": 29, "Training size": 1500000.0, "Average Precision": 0.2280500273959465}, {"Unnamed: 0": 30, "Training size": 10000.0, "Average Precision": 0.10285209703681768}, {"Unnamed: 0": 31, "Training size": 14303.0, "Average Precision": 0.10682050609457854}, {"Unnamed: 0": 32, "Training size": 20458.0, "Average Precision": 0.11342471740832485}, {"Unnamed: 0": 33, "Training size": 29262.0, "Average Precision": 0.12061229552970433}, {"Unnamed: 0": 34, "Training size": 41854.0, "Average Precision": 0.12239054055787005}, {"Unnamed: 0": 35, "Training size": 59865.0, "Average Precision": 0.1283018670683495}, {"Unnamed: 0": 36, "Training size": 85626.0, "Average Precision": 0.14017877208331336}, {"Unnamed: 0": 37, "Training size": 122474.0, "Average Precision": 0.15169158330106444}, {"Unnamed: 0": 38, "Training size": 175178.0, "Average Precision": 0.16725348066711448}, {"Unnamed: 0": 39, "Training size": 250562.0, "Average Precision": 0.1786481719072462}, {"Unnamed: 0": 40, "Training size": 358385.0, "Average Precision": 0.18674740648393467}, {"Unnamed: 0": 41, "Training size": 512608.0, "Average Precision": 0.1986006386772554}, {"Unnamed: 0": 42, "Training size": 733197.0, "Average Precision": 0.20761596504982974}, {"Unnamed: 0": 43, "Training size": 1048711.0, "Average Precision": 0.21894840078096495}, {"Unnamed: 0": 44, "Training size": 1500000.0, "Average Precision": 0.2284439391030473}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
