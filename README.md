@@ -11,6 +11,9 @@ Use this environment:
 `conda env create -f dockop.yml`
 
 
+The manuscript just uses LogisticRegression with default settings because I found that performs	best consistently. But you might be interested in trying other classifiers, hyperparameters\
+, or regressors. If so,	check out this figure first:
+
 ![algo_fp_comparison](./processed_data/fpsize_figure.svg)
 
 ![trainingSetSize](./processed_data/trainingSetSize.svg)
