@@ -7,7 +7,11 @@ Ultra-large scale (100 to 1000 million ligands) virtual molecule libraries are n
 
 ### results:
 
-![fpcomp](./processed_data/fpsize_logreg.svg)
+![gam](./figures/hit_rate_vs_rank.svg)
+
+I fit a GAM to the _in vitro_ hit rate data in Lyu et al, which nicely shows the dip in hit rate at very high ranks (referred to by Shoichet/Iriwn as "the scum [that] rises to the top"). This also helps to define a cut-off point - we might not care for the top 50,000 ligands if, for example, 10,000 of them are going to be 'scum'. Instead, I set the cut-off to 0.3%, which has about a half-maximal hit-rate. In any practical setting, the hit rates achieved below this cut-off would be more than acceptable.  
+
+![fpcomp](./figures/fpsize_logreg.svg)
 
 Interestingly, simply increasing the size of fingerprints beyond what is commonly used in the field (2,048) improves performance a lot! In addition, Morgan fingerprints, often considered a starting point, perform best. Actually, when you use larger Morgan fingerprints they can perform at least as well as a graph neural network:
 
@@ -16,7 +20,7 @@ Interestingly, simply increasing the size of fingerprints beyond what is commonl
 The manuscript just uses LogisticRegression with default settings because I found that performs	best consistently. But you might be interested in trying other classifiers, hyperparameters
 , or regressors. If so,	check out this bonus figure first. It might look like Ridge regressors perform best, and they do perform well, but I found it didn't carry through to the iterative docking retrieval task.
 
-![algo_fp_comparison](./processed_data/fpsize_figure.svg)
+![algo_fp_comparison](./figures/fpsize_figure.svg)
 
 ### discussion
 
