@@ -7,6 +7,7 @@
 *hdf5
 *npz
 
+!41586_2019_917_MOESM4_ESM.csv
 !processed_data/morgan.npz
 !morgan_feat_4096_15000_logreg0.1.hdf5
 !*_all_analysis.ipynb
