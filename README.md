@@ -18,7 +18,7 @@ With a cut-off, we can now binarize the ligands into 'high-scoring' and 'low-sco
 
 Below you can see that the D4 receptor dataset performs a bit worse in all expertiments. If you are concerned about the fingerprint search overfitting at the AmpC receptor, note that Morgan fingerprints with pharmacophoric invariants still perform best on the D4 dataset:
 
-[fpcomp2](./figures/fpsize_logreg_d4.svg)
+![fpcomp2](./figures/fpsize_logreg_d4.svg)
 
 
 Interestingly, simply increasing the size of fingerprints beyond what is commonly used in the field (2,048) improves performance a lot! In addition, Morgan fingerprints, often considered a baseline, perform best. Actually, when you use larger Morgan fingerprints they can perform at least as well as a graph neural network (huge shout out for the pioneering work there [2]):
