@@ -22,6 +22,26 @@ Interestingly, simply increasing the size of fingerprints beyond what is commonl
 
 [2]Graff, David E., Eugene I. Shakhnovich, and Connor W. Coley. "Accelerating high-throughput virtual screening through molecular pool-based active learning." arXiv preprint arXiv:2012.07127 (2020).
 
+To get the raw data in this figure, type:
+
+```python
+import pandas as pd
+
+df = pd.read_csv('./processed_data/ampc_reconstruction_0.3_1_.csv')
+
+out = pd.DataFrame(df.groupby(['Training size', 'N ligands explored'])['% top-k found'].agg([np.mean, stats.sem])*100)
+out['CI_low'] = np.around(out['mean'] - out['sem'] * stats.t.ppf((1+0.95)/ 2., 3-1), 1)
+out['CI_high'] = np.around(out['mean'] + out['sem'] * stats.t.ppf((1+0.95)/ 2., 3-1), 1)
+out['mean'] = np.around(out['mean'], 1)
+out = out.drop('sem', axis=1)
+out
+```
+yielding:
+
+![rawdat](./figures/rawdat.png)
+
+
+
 ### discussion
 
 The ROC curve from a simple test/train split using LogisticRegression is almost perfect. Why does such a simple technique perform so well at predicting docking scores? Compare to bioactivity virtual screening - LogReg and Morgan fingerprints are actually criticized a lot for not generalizing. Perhaps the shift to true random sampling of the training and test sets (as opposed to highly biased sampling in bioactivity data) complies better with the assumptions behind logistic regression, and increases the actual chemical diversity beyond what you would have for the same number of ligands in, say, ChEMBL.     
