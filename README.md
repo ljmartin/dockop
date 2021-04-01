@@ -16,7 +16,7 @@ With a cut-off, we can now binarize the ligands into 'high-scoring' and 'low-sco
 
 ![fpcomp](./figures/fpsize_logreg.svg)
 
-Interestingly, simply increasing the size of fingerprints beyond what is commonly used in the field (2,048) improves performance a lot! In addition, Morgan fingerprints, often considered a starting point, perform best. Actually, when you use larger Morgan fingerprints they can perform at least as well as a graph neural network (huge shout out for the pioneering work there [2]):
+Interestingly, simply increasing the size of fingerprints beyond what is commonly used in the field (2,048) improves performance a lot! In addition, Morgan fingerprints, often considered a baseline, perform best. Actually, when you use larger Morgan fingerprints they can perform at least as well as a graph neural network (huge shout out for the pioneering work there [2]):
 
 ![active](./figures/active_learning_percentage.svg)
 
