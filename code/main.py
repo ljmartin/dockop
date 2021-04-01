@@ -3,7 +3,7 @@ from set_up import Setup
 from estimator import CommonEstimator
 import json
 import h5py
-from utils import get_memory_usage
+#from utils import get_memory_usage
 
 import numpy as np
 SEED = 12939 #from random.org
