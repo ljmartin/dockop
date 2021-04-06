@@ -2,7 +2,7 @@
 
 [See the manuscript on ChemRxiv](https://chemrxiv.org/articles/preprint/State_of_the_Art_Iterative_Docking_with_Logistic_Regression_and_Morgan_Fingerprints/14348117)
 
-Ultra-large scale (100 to 1000 million ligands) virtual molecule libraries are now available from suppliers like Enamine or WuXi. The increased size yields better diversity of high-scoring molecules in a docking campaign, but requires more infrastructure like high-performance computing clusters. The aim of this project was to show that the same hits coud be identified without docking the entire library by training a surrogate model on a random sample of ligands and their docking scores and using that instead. The approach uses just _sklearn_'s LogisticRegression and _RDKit_'s Morgan fingerprints with pharmacophoric atom invariants. 
+Ultra-large scale (100 to 1000 million ligands) virtual molecule libraries are now available from suppliers like Enamine or WuXi. The increased size yields better diversity of high-scoring molecules in a docking campaign, but requires more infrastructure like high-performance computing clusters. The aim of this project was to show that the same hits coud be identified without docking the entire library by training a surrogate model on a random sample of ligands and their docking scores and using that instead. The approach uses just _sklearn_'s LogisticRegression and _RDKit_'s Morgan fingerprints with pharmacophoric atom invariants and achieves top-notch results with minimal training time. 
 
 [1] Lyu, Jiankun, et al. "Ultra-large library docking for discovering new chemotypes." Nature 566.7743 (2019): 224-229.
 
@@ -14,11 +14,11 @@ Ultra-large scale (100 to 1000 million ligands) virtual molecule libraries are n
 I fit a GAM to the _in vitro_ hit rate data in Lyu et al, which nicely shows the dip in hit rate at very high ranks (referred to by Shoichet/Iriwn as "the scum [that] rises to the top"). This also helps to define a cut-off point - we might not care for the top 50,000 ligands if, for example, the library is 300 million and 30,000 of them are going to be 'scum'. Instead, I set the cut-off to 0.3%, which has about a half-maximal hit-rate. In any practical setting, the hit rates achieved below this cut-off (including the scum to be honest) would be more than acceptable.  
 
 
-With a cut-off, we can now binarize the ligands into 'high-scoring' and 'low-scoring' classes, and use a classifier, i.e. logistic regression. Comparing some fingerprints and logistic regression using the average precision metric:
+With a cut-off, we can now binarize the ligands into 'high-scoring' and 'low-scoring' classes, and use a classifier, i.e. logistic regression. Comparing some fingerprints and logistic regression using the average precision metric on the AmpC dataset:
 
 ![fpcomp](./figures/fpsize_logreg.svg)
 
-Below you can see that the D4 receptor dataset performs a bit worse in all expertiments. If you are concerned about the fingerprint search overfitting at the AmpC receptor, note that Morgan fingerprints with pharmacophoric invariants still perform best on the D4 dataset:
+While the D4 receptor dataset is a bit more difficult to classify, the same trend appears:
 
 ![fpcomp2](./figures/fpsize_logreg_d4.svg)
 
